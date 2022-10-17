@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func CreateKeys(bitNum int) {
+func CreateKeys(bitNum int) (PrivateKey *paillier.PrivateKey) {
 	seed := rand.Reader
 	PrivateKey, err := paillier.GenerateKey(seed, bitNum)
 
@@ -24,7 +24,7 @@ func CreateKeys(bitNum int) {
 		return
 	}
 
-	fmt.Println("This is your secret keys, don't explore them!")
+	fmt.Println("This is 公证人生成的 secret keys, don't explore them!")
 	NowTime := strings.Split(time.Now().String(), " ")[:2]
 	home := ShellUtils.GetOutFromStdout("echo $HOME")[0]
 	filename := home + "/paillier/keys/" + NowTime[0] + "_" + NowTime[1] + ".json" // 需要改进
@@ -51,5 +51,5 @@ func CreateKeys(bitNum int) {
 		fmt.Println("Write marshal err:", err4)
 		return
 	}
-
+	return
 }
