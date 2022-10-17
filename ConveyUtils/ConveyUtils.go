@@ -1,8 +1,11 @@
 package ConveyUtils
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"net"
+	"os"
 	"strings"
 )
 
@@ -48,4 +51,21 @@ func RecvFrom(conn net.Conn) (data []byte) { // 接收到 _over 结束本次接�
 	data = data[:len(data)-5]
 	fmt.Println("Recv content:", string(data))
 	return
+}
+func ConveyFile(conn net.Conn, filePath string) {
+	f, err := os.Open(filePath)
+	if err != nil {
+		fmt.Println("打开文件错误：", err)
+	}
+	reader := bufio.NewReader(f)
+	buf := make([]byte, 1024)
+	for {
+		n, err := reader.Read(buf)
+		if err != nil && err == io.EOF {
+			fmt.Println("文件读取完毕:", err, n)
+			ConveyData(conn, []byte("_over"))
+			break
+		}
+		ConveyData(conn, buf)
+	}
 }

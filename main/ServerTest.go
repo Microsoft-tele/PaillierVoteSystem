@@ -11,10 +11,12 @@ import (
 	"net"
 	"os"
 	"strconv"
+	"sync"
 )
 
-//var MAX_CLINET_NUM = 150 // 包括投票人和被选举人的服务线程数
-//var lock sync.Mutex
+// var MAX_CLINET_NUM = 150 // 包括投票人和被选举人的服务线程数
+var lock sync.Mutex
+
 //var NotaryNum = 0
 //var Info = 0
 
@@ -166,46 +168,20 @@ func Model_2(conn net.Conn) {
 }
 func Model_3(conn net.Conn, CandidateConnList *[]net.Conn) {
 	// 选择是否修改最大加入人数
-	ConveyUtils.ConveyData(conn, []byte("是否修改加入投票的总人数:[目前默认最大加入人数是"+fmt.Sprintf("%d", MAX_CLINET_NUM)+"] (Y/n):\n")) // 接收返回信息
-	ConveyUtils.ConveyData(conn, []byte("_over"))
-	data := ConveyUtils.RecvFrom(conn)
-	strData := string(data)
-	strData = strData[:len(strData)-1]
-	fmt.Println("是否修改最大进入人数：", strData)
-	if strData == "Y" || strData == "y" {
-		for {
-			ConveyUtils.ConveyData(conn, []byte("请输入修改的数字:\n")) // 接收返回信息
-			ConveyUtils.ConveyData(conn, []byte("_over"))
-			data1 := ConveyUtils.RecvFrom(conn)
-			maxNumStr := string(data1)
-			maxNumStr = maxNumStr[:len(maxNumStr)-1]
-			maxNum, err := strconv.Atoi(maxNumStr)
-			if err != nil {
-				ConveyUtils.ConveyData(conn, []byte("您的输入不合法，请重新输入:\n")) // 接收返回信息
-				ConveyUtils.ConveyData(conn, []byte("_over"))
-			} else {
-				fmt.Println("用户输入的最大接入量：", maxNum)
-				MAX_CLINET_NUM = maxNum
-				break
-			}
-		}
-	} else if strData == "N" || strData == "n" {
-		fmt.Println("用户选择不修改最大加入人数")
-	}
 
 	// 生成一个公证人
 	Notary := NotaryInitWork(conn)
 
 	for { // 发送菜单给客户
-		ConveyUtils.ConveyData(conn, []byte("功能菜单:\n"))    //
-		ConveyUtils.ConveyData(conn, []byte("1.制作选票:\n"))  //
-		ConveyUtils.ConveyData(conn, []byte("2.分发选票:\n"))  //
-		ConveyUtils.ConveyData(conn, []byte("3.统计结果:\n"))  //
-		ConveyUtils.ConveyData(conn, []byte("4.查看结果:\n"))  //
-		ConveyUtils.ConveyData(conn, []byte("5.查看密文:\n"))  //
-		ConveyUtils.ConveyData(conn, []byte("6.验证签名:\n"))  //
-		ConveyUtils.ConveyData(conn, []byte("7.退出程序:\n"))  //
-		ConveyUtils.ConveyData(conn, []byte("8.调试:\n"))    //
+		ConveyUtils.ConveyData(conn, []byte("功能菜单:\n"))       //
+		ConveyUtils.ConveyData(conn, []byte("1.制作选票:\n"))     //
+		ConveyUtils.ConveyData(conn, []byte("2.分发选票:\n"))     //
+		ConveyUtils.ConveyData(conn, []byte("3.统计结果:\n"))     //
+		ConveyUtils.ConveyData(conn, []byte("4.查看结果:\n"))     //
+		ConveyUtils.ConveyData(conn, []byte("5.查看密文:\n"))     //
+		ConveyUtils.ConveyData(conn, []byte("6.验证签名:\n"))     //
+		ConveyUtils.ConveyData(conn, []byte("7.退出程序:\n"))     //
+		ConveyUtils.ConveyData(conn, []byte("8.调试:\n"))         //
 		ConveyUtils.ConveyData(conn, []byte("请输入您的选择:\n")) //
 		ConveyUtils.ConveyData(conn, []byte("_over"))
 

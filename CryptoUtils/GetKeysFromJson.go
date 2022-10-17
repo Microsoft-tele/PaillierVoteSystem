@@ -24,7 +24,7 @@ func GetKeysFromJson(conn net.Conn) (key *paillier.PrivateKey) {
 	fmt.Println("请输入您本次投票使用的密钥：")
 
 	for {
-		ConveyUtils.ConveyData(conn, []byte("请输入您本次投票使用的密钥:(Y/n)\n")) // 接收返回信息
+		ConveyUtils.ConveyData(conn, []byte("请输入您本次投票使用的密钥:\n")) // 接收返回信息
 		ConveyUtils.ConveyData(conn, []byte("_over"))
 		data := ConveyUtils.RecvFrom(conn)
 		strData := string(data)
