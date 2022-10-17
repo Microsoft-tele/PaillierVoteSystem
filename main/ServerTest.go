@@ -11,13 +11,12 @@ import (
 	"net"
 	"os"
 	"strconv"
-	"sync"
 )
 
-var MAX_CLINET_NUM = 150 // 包括投票人和被选举人的服务线程数
-var lock sync.Mutex
-var NotaryNum = 0
-var Info = 0
+//var MAX_CLINET_NUM = 150 // 包括投票人和被选举人的服务线程数
+//var lock sync.Mutex
+//var NotaryNum = 0
+//var Info = 0
 
 func main() {
 	InitWork()
@@ -123,40 +122,38 @@ func ChildProcess(conn net.Conn, Candidates *[]net.Conn, Voters *[]net.Conn, Not
 	}
 }
 
-func Hello(conn net.Conn) { // 建立成功进行问好
-	ConveyUtils.ConveyData(conn, []byte("成功建立连接，你好！"))
-	ConveyUtils.ConveyData(conn, []byte("_over"))
-	return
-}
+//func Hello(conn net.Conn) { // 建立成功进行问好
+//	ConveyUtils.ConveyData(conn, []byte("成功建立连接，你好！"))
+//	ConveyUtils.ConveyData(conn, []byte("_over"))
+//	return
+//}
 
-func WorkModel(conn net.Conn) (model int) {
-LOOP:
-	ConveyUtils.ConveyData(conn, []byte("您是候选人或投票人?\n1.候选人\n2.投票人\n3.公证人"))
-	ConveyUtils.ConveyData(conn, []byte("_over"))
-	data := ConveyUtils.RecvFrom(conn)
-	strData := string(data)
-	strData = strData[:len(strData)-1]
-	fmt.Println("strData:", strData)
-	model, err := strconv.Atoi(strData)
-	if err != nil {
-		fmt.Println("err is ", err)
-		ConveyUtils.ConveyData(conn, []byte("您的输入不合法，请重新输入：\n"))
-		ConveyUtils.ConveyData(conn, []byte("_over"))
-		goto LOOP
-	} else {
-		fmt.Println("接收到来自用户的Model选择，进行下一步判断")
-	}
-	return model
-}
+//func WorkModel(conn net.Conn) (model int) {
+//LOOP:
+//	ConveyUtils.ConveyData(conn, []byte("您是候选人或投票人?\n1.候选人\n2.投票人\n3.公证人"))
+//	ConveyUtils.ConveyData(conn, []byte("_over"))
+//	data := ConveyUtils.RecvFrom(conn)
+//	strData := string(data)
+//	strData = strData[:len(strData)-1]
+//	fmt.Println("strData:", strData)
+//	model, err := strconv.Atoi(strData)
+//	if err != nil {
+//		fmt.Println("err is ", err)
+//		ConveyUtils.ConveyData(conn, []byte("您的输入不合法，请重新输入：\n"))
+//		ConveyUtils.ConveyData(conn, []byte("_over"))
+//		goto LOOP
+//	} else {
+//		fmt.Println("接收到来自用户的Model选择，进行下一步判断")
+//	}
+//	return model
+//}
 
 func Model_1(conn net.Conn) {
 
 	Hello(conn)
 	ConveyUtils.ConveyData(conn, []byte("请等待第三方公证人的指令:\n")) // 这个地方只接受姓名即可
 	ConveyUtils.ConveyData(conn, []byte("_over"))
-	for Info == 0 {
 
-	}
 	// 等待公证人操作
 }
 func Model_2(conn net.Conn) {
