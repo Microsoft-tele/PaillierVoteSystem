@@ -11,7 +11,8 @@
         <div id="register-box">
             <span>欢迎注册</span>
             <div class="tips">
-                <label class="form-label" id="tips">已有账号？<a href="../LoginFrame/index.html">点击登录</a></label><br>
+                <label class="form-label" id="tips">已有账号？<a href="http://192.168.1.105:8080/login">点击登录</a></label><br>
+                <!--记得修改公网地址-->
             </div>
             <div class="form">
                 <div class="radio-inline">
@@ -46,6 +47,9 @@
 
             </div>
             <button class="btn" type="submit">注册</button>
+            <div class="tip">
+                <p>{{.}}</p>
+            </div>
         </div>
     </form>
 </body>

@@ -4,17 +4,16 @@
 }
 
 body {
-    background: url("img/bk_img.jpg") center;
-    background-size: 120% auto;
+    background: url("/css/img/login_bk_img.png") center;
+    background-size: 150% auto;
     background-repeat: no-repeat;
-    overflow: hidden;
 }
 
 #register-box {
-    width: 23%;
+    width: 22%;
     height: auto;
-    margin-left: 1200px;
-    margin-top: 50px;
+    margin-left: 1250px;
+    margin-top: 6%;
     margin-bottom: 250px;
     text-align: left;
     background: #ececec;
@@ -115,3 +114,10 @@ body {
     cursor: pointer;
 }
 
+#register-box .tip {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff1c1c;
+}

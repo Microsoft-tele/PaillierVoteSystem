@@ -4,34 +4,33 @@
 }
 
 body {
-    background: url("img/bk_img.png") center;
-    background-size: 120% auto;
+    background: url("/css/img/login_bk_img.png") center;
+    background-size: 150% auto;
     background-repeat: no-repeat;
-    overflow: hidden;
-    background-size: auto;
 }
 
 #login-box {
-    width: 30%;
+    width: 55%;
     height: auto;
     margin: 0 auto;
-    margin-top: 15%;
+    margin-top: 10%;
     text-align: center;
     background: #00000080;
-    padding: 20px 50px 5px 50px;
+    padding: 50px 50px 5px 50px;
 }
 
 #login-box h1 {
     color: white;
     font-style: oblique;
+    font-size: 50px;
 }
 
 #login-box .form .item {
-    margin-top: 15px;
+    margin-top: 60px;
 }
 
 #login-box .form .item input {
-    width: 180px;
+    width: 280px;
     font-size: 18px;
     border: 0;
     border-bottom: 2px solid white;
@@ -51,36 +50,45 @@ body {
 
 #login-box button {
     border: 0;
-    margin-top: 20px;
-    width: 125px;
-    height: 30px;
-    font-size: 20px;
+    width: 150px;
+    height: 50px;
+    font-size: 30px;
     font-weight: 700;
     color: white;
     background-image: linear-gradient(to right, #00dbde 0%, #0051ff 100%);
-    border-radius: 15px;
+    border-radius: 25px;
 }
 
+#login-box button {
+    cursor: pointer;
+}
 
 #login-box .form .radio-inline {
-    margin-top: 18px;
+    margin: 50px;
 }
 
 #login-box .form .radio-inline .idRadio label {
-    font-size: 18px;
+    font-size: 26px;
     background: #ffffff00;
     color: #ffffff;
+    margin: 5px;
+}
+
+#login-box .tip {
+    font-size: 20px;
+    color: #ff1c1c;
+    text-align: right;
 }
 
 #login-box .tips{
     margin-top: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
     text-align: right;
 }
 
 #login-box .tips a {
     text-decoration: none;
-    font-size: 16px;
+    font-size: 20px;
     color: white;
 }
 

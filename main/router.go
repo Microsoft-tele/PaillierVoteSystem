@@ -19,7 +19,15 @@ var Tickets []VoteUtils.BallotTicket
 func main() {
 	http.Handle("/paillierKeys/pub/", http.StripPrefix("/paillierKeys/pub/", http.FileServer(http.Dir("../paillierKeys/pub"))))
 
-	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("../img"))))
+	http.Handle("/css/img/", http.StripPrefix("/css/img/", http.FileServer(http.Dir("../css/img/"))))
+
+	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../css"))))
+
+	http.Handle("/mod/", http.StripPrefix("/mod/", http.FileServer(http.Dir("../mod"))))
+
+	http.HandleFunc("/login", Login)
+
+	http.HandleFunc("/register", Register)
 
 	http.HandleFunc("/entryCandidateInfo", EntryCandidateInfo)
 
@@ -41,6 +49,16 @@ func main() {
 		fmt.Println("监听错误:", err)
 		return
 	}
+}
+
+func Login(w http.ResponseWriter, r *http.Request) {
+	files, _ := template.ParseFiles("../mod/login.html")
+	files.Execute(w, "")
+}
+
+func Register(w http.ResponseWriter, r *http.Request) {
+	files, _ := template.ParseFiles("../mod/register.html")
+	files.Execute(w, "")
 }
 
 func EntryCandidateInfo(w http.ResponseWriter, r *http.Request) {
