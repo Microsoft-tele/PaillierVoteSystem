@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form name="input" action="http://localhost:12345/recvTicket" method="post">
+    <h1>选票</h1>
+    <table border="1" id="Ticket">
+        <tr>
+            <td>姓名</td>
+            <td>自我介绍</td>
+            <td>选择</td>
+        </tr>
+        {{range .}}
+        <tr>
+            <td>{{.Name}}</td>
+            <td>{{.Introduction}}</td>
+            <td>
+                <input type="hidden" name="{{.Name}}" value="0">
+                <label>
+                    <input type="checkbox" name="{{.Name}}" value="1">
+                </label>
+            </td>
+        </tr>
+        {{end}}
+    </table>
+    请输入您的真实姓名(请实名):<input type="text" name="VoetrName"><br>
+    <input type="submit" value="Submit">
+</form>
+</form>
+</body>
+</html>

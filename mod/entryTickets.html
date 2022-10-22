@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script>
+    function addtr(){
+      var tableObj = document.getElementById("Ticket")
+      var trObj = document.createElement("tr")
+
+      var tdObj = document.createElement("td")
+      tdObj.innerHTML = `<input type="text" name="Name">`
+      trObj.appendChild(tdObj)
+
+      var tdObj = document.createElement("td")
+      tdObj.innerHTML = `<input type="text" name="Intro">`
+      trObj.appendChild(tdObj)
+
+      tableObj.appendChild(trObj)
+    }
+  </script>
+</head>
+<body>
+<form action="#" method="post">
+  <table border="1" id="Ticket">
+    <thead>
+    录入候选人信息
+    </thead>
+    <tr>
+      <td>姓名</td>
+      <td>个人简介</td>
+    </tr>
+  </table>
+  <input type="submit" value="提交">
+</form>
+<input type="button" value="添加候选人" onclick="addtr()">
+</body>
+</html>
