@@ -10,5 +10,11 @@ func main() {
 	if err != nil {
 		fmt.Println("连接失败:", err)
 	}
-	conn.Do("Get", "k1")
+	name := "李为君"
+	do, err := conn.Do("Lpush", "name", name)
+	if err != nil {
+		fmt.Println("获取数据失败:", err)
+		return
+	}
+	fmt.Println(do)
 }
