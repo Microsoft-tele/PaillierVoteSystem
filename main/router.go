@@ -9,12 +9,13 @@ import (
 	"fmt"
 	"html/template"
 	"io"
-	"math/big"
 	"net/http"
 )
 
-var PaillierPrivateKey *paillier.PrivateKey
-var Tickets []VoteUtils.BallotTicket
+var PaillierPrivateKey *paillier.PrivateKey // 保存本地paillier公私钥
+var Tickets []VoteUtils.BallotTicket        // 保存投票人上传的选票
+var NameList []string
+var IntroductionList []string
 
 func main() {
 	http.Handle("/paillierKeys/pub/", http.StripPrefix("/paillierKeys/pub/", http.FileServer(http.Dir("../paillierKeys/pub"))))
@@ -25,13 +26,17 @@ func main() {
 
 	http.HandleFunc("/recvCandidateInfo", RecvCandidateInfo)
 
+	http.HandleFunc("/", Index)
+
 	http.HandleFunc("/index", Index) // 首页
 
-	http.HandleFunc("/init", Init)
+	http.HandleFunc("/init", Init) // 初始化系统，包括删除系统中已经有的paillier公钥,将NameList和IntroductionList清空
 
 	http.HandleFunc("/ticket", SendTickets)
 
 	http.HandleFunc("/recvTicket", RecvTicket)
+
+	http.HandleFunc("/statistic", StatisticTickets)
 
 	http.HandleFunc("/downloadPaillierPublicKey", DownloadPaillierPublicKey) // 用户必须先下载公钥，再上传选票之前必须上传本公钥到服务器
 
@@ -50,13 +55,35 @@ func EntryCandidateInfo(w http.ResponseWriter, r *http.Request) {
 
 func RecvCandidateInfo(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	NameList = make([]string, 0)
+	IntroductionList = make([]string, 0)
+	//fmt.Println(r.PostFormValue("Name"))
 	form := r.PostForm
-	fmt.Println(form)
+	for k, v := range form {
+		if k == "Name" {
+			for _, name := range v {
+				//fmt.Printf("v is %T : %v:\n", name, name)
+				NameList = append(NameList, name)
+			}
+		} else {
+			for _, intro := range v {
+				IntroductionList = append(IntroductionList, intro)
+			}
+		}
+	}
+	fmt.Println("姓名", NameList)
+	fmt.Println("简介", IntroductionList)
+
+	files, _ := template.ParseFiles("../mod/index.html")
+	files.Execute(w, "设置选票成功")
 }
 
 func Init(w http.ResponseWriter, r *http.Request) {
-	ShellUtils.GetOutFromStdout("rm ../paillierKeys/pri/*")
+	ShellUtils.GetOutFromStdout("rm ../paillierKeys/pri/*") // 清空paillier密钥文件
 	ShellUtils.GetOutFromStdout("rm ../paillierKeys/pub/*")
+	NameList = make([]string, 0)
+	IntroductionList = make([]string, 0)
+
 	fmt.Println("初始化完毕")
 	files, _ := template.ParseFiles("../mod/index.html")
 	files.Execute(w, "初始化完毕")
@@ -102,32 +129,32 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func SendTickets(w http.ResponseWriter, r *http.Request) {
 	files, err := template.ParseFiles("../mod/ticket.html") // 加载选票
 
-	can1 := VoteUtils.Candidate{
-		ID:           "1",
-		Name:         "李为君",
-		Introduction: "20",
-	}
-	can2 := VoteUtils.Candidate{
-		ID:           "2",
-		Name:         "何俭涛",
-		Introduction: "20",
-	}
-	can3 := VoteUtils.Candidate{
-		ID:           "3",
-		Name:         "徐许越",
-		Introduction: "20",
-	}
-	can4 := VoteUtils.Candidate{
-		ID:           "4",
-		Name:         "闵浩哲",
-		Introduction: "20",
-	}
+	//can1 := VoteUtils.Candidate{
+	//	ID:           "1",
+	//	Name:         "李为君",
+	//	Introduction: "20",
+	//}
+	//can2 := VoteUtils.Candidate{
+	//	ID:           "2",
+	//	Name:         "何俭涛",
+	//	Introduction: "20",
+	//}
+	//can3 := VoteUtils.Candidate{
+	//	ID:           "3",
+	//	Name:         "徐许越",
+	//	Introduction: "20",
+	//}
+	//can4 := VoteUtils.Candidate{
+	//	ID:           "4",
+	//	Name:         "闵浩哲",
+	//	Introduction: "20",
+	//}
 	cans := make([]VoteUtils.Candidate, 0)
-	cans = append(cans, can1)
-	cans = append(cans, can2)
-	cans = append(cans, can3)
-	cans = append(cans, can4)
-
+	for i := 0; i < len(NameList); i++ {
+		can := VoteUtils.Candidate{}
+		can.SetCandidateInfo(NameList[i], IntroductionList[i])
+		cans = append(cans, can)
+	}
 	if err != nil {
 		fmt.Println("加载模版失败:", err)
 		return
@@ -165,10 +192,9 @@ func RecvData(w http.ResponseWriter, r *http.Request) {
 	//}
 	w.Header().Set("Location", "/mod/paillier")
 	w.WriteHeader(302)
-}
+} // 使用缓存接收整个数据包
 
 func RecvTicket(w http.ResponseWriter, r *http.Request) {
-	PaillierPrivateKey = CryptoUtils.GetKeysFromJson("../paillierKeys/pri/key")
 
 	err := r.ParseForm()
 	if err != nil {
@@ -177,7 +203,7 @@ func RecvTicket(w http.ResponseWriter, r *http.Request) {
 	TicketData := r.PostFormValue("Ticket")
 	//fmt.Println(Ticket)
 	TicketJson := []byte(TicketData)
-	fmt.Println(TicketJson)
+	//fmt.Println(TicketJson)
 	Ticket := VoteUtils.BallotTicket{}
 	err = json.Unmarshal(TicketJson, &Ticket)
 	if err != nil {
@@ -185,15 +211,25 @@ func RecvTicket(w http.ResponseWriter, r *http.Request) {
 	}
 	//fmt.Println(Ticket)
 	Tickets = append(Tickets, Ticket)
-	res := new(big.Int).SetInt64(0)
-	cRes, _ := paillier.Encrypt(&PaillierPrivateKey.PublicKey, res.Bytes())
-	for i := 0; i < Ticket.CandidateNum; i++ {
-		cRes = paillier.AddCipher(&PaillierPrivateKey.PublicKey, cRes, Ticket.Option[i])
+	//res := new(big.Int).SetInt64(0)
+	//cRes, _ := paillier.Encrypt(&PaillierPrivateKey.PublicKey, res.Bytes())
+	//for i := 0; i < Ticket.CandidateNum; i++ {
+	//	cRes = paillier.AddCipher(&PaillierPrivateKey.PublicKey, cRes, Ticket.Option[i])
+	//}
+	//fmt.Println("调试：相加结果:", cRes)
+	//decrypt, err := paillier.Decrypt(PaillierPrivateKey, cRes)
+	//if err != nil {
+	//	return
+	//}
+	//fmt.Println("解密的数字:", new(big.Int).SetBytes(decrypt).String())
+
+}
+
+func StatisticTickets(w http.ResponseWriter, r *http.Request) {
+	PaillierPrivateKey = CryptoUtils.GetKeysFromJson("../paillierKeys/pri/key")
+	fmt.Println("解析Paillier公钥成功:")
+	fmt.Println("打印调试信息:")
+	for i, v := range Tickets {
+		fmt.Printf("[%d : %v]\n", i, v.CandidateNameList)
 	}
-	fmt.Println("调试：相加结果:", cRes)
-	decrypt, err := paillier.Decrypt(PaillierPrivateKey, cRes)
-	if err != nil {
-		return
-	}
-	fmt.Println("解密的数字:", new(big.Int).SetBytes(decrypt).String())
 }
