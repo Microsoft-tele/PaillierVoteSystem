@@ -21,7 +21,9 @@ func main() {
 
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("../img"))))
 
-	//http.Handle("/paillierKeys/")
+	http.HandleFunc("/entryCandidateInfo", EntryCandidateInfo)
+
+	http.HandleFunc("/recvCandidateInfo", RecvCandidateInfo)
 
 	http.HandleFunc("/index", Index) // 首页
 
@@ -39,6 +41,17 @@ func main() {
 		fmt.Println("监听错误:", err)
 		return
 	}
+}
+
+func EntryCandidateInfo(w http.ResponseWriter, r *http.Request) {
+	files, _ := template.ParseFiles("../mod/entryCandidateInfo.html")
+	files.Execute(w, "")
+}
+
+func RecvCandidateInfo(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	form := r.PostForm
+	fmt.Println(form)
 }
 
 func Init(w http.ResponseWriter, r *http.Request) {

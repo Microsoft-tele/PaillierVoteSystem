@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <link rel="stylesheet" href="/css/register.css">
+
+</head>
+<body>
+    <form action="#" method="post">
+        <div id="register-box">
+            <span>欢迎注册</span>
+            <div class="tips">
+                <label class="form-label" id="tips">已有账号？<a href="../LoginFrame/index.html">点击登录</a></label><br>
+            </div>
+            <div class="form">
+                <div class="radio-inline">
+                    <label class="form-label">请选择您的身份</label>
+                    <label class="idRadio">
+                        <input type="radio" name="idRadioOption" id="voter" required><label for="voter">投票人</label>
+                    </label>
+                    <label class="idRadio">
+                        <input type="radio" name="idRadioOption" id="candidate" required><label for="candidate">候选人</label>
+                    </label>
+                    <label class="idRadio">
+                        <input type="radio" name="idRadioOption" id="notary" required><label for="notary">公证人</label>
+                    </label>
+                </div>
+                <div class="item">
+                    <label class="form-label" for="name">昵称</label>
+                    <input id="name" class="form-input" type="text" placeholder="请输入昵称" required/><br>
+                </div>
+                <div class="item">
+                    <label class="form-label" for="email">邮箱</label>
+                    <input id="email" class="form-input" type="email" placeholder="请输入邮箱" required/><br>
+                </div>
+                <div class="item">
+                    <label class="form-label" for="password">密码</label>
+                    <input id="password" class="form-input" type="password" placeholder="请输入密码" required/><br>
+                </div>
+                <div class="item">
+                    <label class="form-label" for="verificationcode">验证码</label>
+                    <input id="verificationcode" class="form-input" type="text" placeholder="请输入验证码" />
+                    <button>获取验证码</button>
+                </div>
+
+            </div>
+            <button class="btn" type="submit">注册</button>
+        </div>
+    </form>
+</body>
+</html>
