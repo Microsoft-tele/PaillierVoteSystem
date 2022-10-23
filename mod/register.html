@@ -42,15 +42,27 @@
                 <div class="item">
                     <label class="form-label" for="verificationcode">验证码</label>
                     <input id="verificationcode" class="form-input" type="text" placeholder="请输入验证码" />
-                    <button>获取验证码</button>
                 </div>
-
             </div>
             <button class="btn" type="submit">注册</button>
+            <a onclick="getVerifyCode()">
+                <button>获取验证码</button>
+            </a>
             <div class="tip">
                 <p>{{.}}</p>
             </div>
         </div>
     </form>
+
+    <script>
+        function getVerifyCode(){
+            const mail = document.getElementById('email').value;
+            const url = "http://192.168.1.106:8080/sendVerifyCode?mail=" + mail
+            alert(url)
+            const Http = new XMLHttpRequest()
+            Http.open("GET", url)
+            Http.send(mail)
+        }
+    </script>
 </body>
 </html>
