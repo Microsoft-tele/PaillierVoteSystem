@@ -2,40 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-  <script>
-    function addtr(){
-      var tableObj = document.getElementById("Ticket")
-      var trObj = document.createElement("tr")
+    <title>选票信息录入</title>
+    <link rel="stylesheet" href="/css/entryCandidateInfo.css">
+    <script>
+        function addtr(){
+            var tableObj = document.getElementById("Ticket")
+            var trObj = document.createElement("tr")
 
-      var tdObj = document.createElement("td")
-      tdObj.innerHTML = `<input type="text" name="Name">`
-      trObj.appendChild(tdObj)
+            var tdObj = document.createElement("td")
+            tdObj.innerHTML = `<input type="text" name="Name">`
+            trObj.appendChild(tdObj)
 
-      var tdObj = document.createElement("td")
-      tdObj.innerHTML = `<input type="text" name="Intro">`
-      trObj.appendChild(tdObj)
+            var tdObj = document.createElement("td")
+            tdObj.innerHTML = `<input type="text" name="Intro">`
+            trObj.appendChild(tdObj)
 
-      tableObj.appendChild(trObj)
-    }
-  </script>
+            tableObj.appendChild(trObj)
+        }
+    </script>
 </head>
 <body>
-<form action="http://127.0.0.1:8080/recvCandidateInfo" method="post">
-  <table border="1" id="Ticket">
-    <thead>
-    录入候选人信息
-    </thead>
-    <tr>
-      <td>姓名</td>
-      <td>个人简介</td>
-    </tr>
-  </table>
-  <hr/>
-  请输入投票人最多可投的票数:<input type="number">
-  截止日期:<input type="date">
-  <input type="submit" value="提交" name="MaxNum">
-</form>
-<input type="button" value="添加候选人" onclick="addtr()">
+<div class="home">
+    <div class="page">
+        <div class="tittle">
+            <p>选票信息录入</p>
+        </div>
+        <hr style="border: 1px dotted #000000"/>
+        <form action="http://127.0.0.1:8080/recvCandidateInfo" method="post">
+            <p id="tittle1">候选人信息录入</p>
+            <table border="1" id="Ticket">
+                <tr>
+                    <td class="tittle2">姓名</td>
+                    <td class="tittle2">候选人简介</td>
+                </tr>
+            </table>
+
+            <input class="new-bnt" type="button" value="+" onclick="addtr()">
+            <hr style="border: 1px dotted #000000"/>
+            <p id="tittle3">设置</p>
+            <div class="form-span">
+                <span id="topic">投票标题:</span><input id="topic-input" type="text" placeholder="请输入标题">
+                <span id="date">投票截止日期:</span><input id="date-input" type="date" placeholder="请选择">
+                <span id="ticker-num">投票人最多可投票数:</span><input type="number" placeholder="请选择">
+            </div>
+            <input class="btn" type="submit" value="提交" name="MaxNum">
+        </form>
+      </div>
+</div>
 </body>
 </html>

@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.home {
+    height: auto;
+    margin: 0 auto;
+    margin-top: 6%;
+    margin-left: 10%;
+}
+
+.page {
+    padding: 7.5px 5px 7.5px 20px;
+    background: #DEAA2F;
+    position: absolute;
+    text-align: center;
+    width: 80%;
+    color: black;
+    margin: 0 auto;
+}
+
+.page:before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    -moz-transform: rotate(-3deg);
+    -webkit-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+    -ms-transform: rotate(-3deg);
+    transform: rotate(-3deg);
+    bottom: 15px;
+    box-shadow: 0 15px 10px rgba(0, 0, 0, 0.7);
+    height: 50%;
+    left: 10px;
+    max-height: 100px;
+    max-width: 300px;
+    width: 50%;
+}
+
+.page:after {
+    -moz-transform: rotate(3deg);
+    -webkit-transform: rotate(3deg);
+    -o-transform: rotate(3deg);
+    -ms-transform: rotate(3deg);
+    transform: rotate(3deg);
+    left: auto;
+    right: 10px;
+}
+
+.page .tittle {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.page #tittle1 {
+    font-weight: bolder;
+    color: black;
+    font-size: 60px;
+}
+
+.page #tittle2 {
+    font-weight: bold;
+    color: #ff1c1c;
+    font-size: 30px;
+    padding: 0 0 0 40px;
+}
+
+.page .tips{
+    text-align: left;
+    font-size: 30px;
+    margin: 30px 0;
+}
+
+.page .tips label {
+    padding: 5px 0;
+}
+
+.page .tips input {
+    height: 34px;
+    width: 200px;
+    margin: 0 0 0 5px;
+    border: 1px;
+    border-color: #DEAA2F;
+    border-radius: 3px;
+}
+
+.page #Ticket {
+    margin: 50px 300px;
+    width: 850px;
+    font-size: 30px;
+    border-bottom: 2px solid #000000;
+}
+
+.page #Ticket .tittle3 {
+    font-size: 36px;
+}
+
+.page .btn {
+    margin: 40px;
+    width: 200px;
+    height: auto;
+    font-size: 30px;
+    border-radius: 20px;
+    border: 1px;
+}
+
+.page .btn:hover {
+    cursor: pointer;
+    color: #ff2323;
+}

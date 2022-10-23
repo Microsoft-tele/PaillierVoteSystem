@@ -4,21 +4,6 @@
     <title>Title</title>
 </head>
 <body>
-<script>
-    function downloadFile(url, filename){
-        const x = new XMLHttpRequest();
-        x.open("GET", url, true);
-        x.responseType = 'blob';
-        x.onload=function (e){
-            var url = window.URL.createObjectURL(x.response);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-        }
-        x.send();
-    }
-</script>
 <!--  <a onclick="downloadFile('http://127.0.0.1:8080/paillierKeys/pub/key', 'key')">点击下载</a>-->
   <a href="/paillierKeys/pub/key" download="key">点击下载</a>
 </body>

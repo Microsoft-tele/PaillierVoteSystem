@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.home {
+    height: 150%;
+    margin: 0 auto;
+    margin-top: 6%;
+    margin-left: 10%;
+}
+
+.page {
+    padding: 7.5px 5px 7.5px 20px;
+    background: #DEAA2F;
+    position: absolute;
+    text-align: center;
+    width: 80%;
+    color: black;
+    margin: 0 auto;
+}
+
+.page:before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    -moz-transform: rotate(-3deg);
+    -webkit-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+    -ms-transform: rotate(-3deg);
+    transform: rotate(-3deg);
+    bottom: 15px;
+    box-shadow: 0 15px 10px rgba(0, 0, 0, 0.7);
+    height: 50%;
+    left: 10px;
+    max-height: 100px;
+    max-width: 300px;
+    width: 50%;
+}
+
+.page:after {
+    -moz-transform: rotate(3deg);
+    -webkit-transform: rotate(3deg);
+    -o-transform: rotate(3deg);
+    -ms-transform: rotate(3deg);
+    transform: rotate(3deg);
+    left: auto;
+    right: 10px;
+}
+
+.page .tittle {
+    text-align: left;
+    margin: 20px 0;
+    font-weight: bolder;
+    font-size: 60px;
+}
+
+.page #tittle1 {
+    font-size: 30px;
+    margin: 20px 0;
+    text-align: left;
+    font-weight: bold;
+}
+
+.page #Ticket {
+    margin: 30px 300px;
+    width: 850px;
+    font-size: 28px;
+    border: 2px solid #000000;
+}
+
+.page .new-bnt {
+    width: 40px;
+    height: auto;
+    font-size: 30px;
+    border-radius: 20px;
+    color: #000000;
+    background-color: #00ff20;
+    margin: 0 300px 50px 300px;
+    text-align: revert;
+}
+
+.page .new-bnt:hover {
+    cursor: pointer;
+    background-color: #00a3ff;
+}
+
+.page #Ticket .tittle2 {
+    font-size: 30px;
+}
+
+.page #tittle3 {
+    font-size: 30px;
+    margin: 20px 0;
+    text-align: left;
+    font-weight: bold;
+}
+
+.page .form-span {
+    text-align: left;
+    margin: 40px 0;
+}
+
+.page .form-span #topic {
+    font-size: 25px;
+    padding: 20px 0 20px 80px;
+}
+
+.page .form-span #date {
+    font-size: 25px;
+    padding: 20px 0 20px 20px;
+}
+
+.page .form-span #ticker-num {
+    font-size: 25px;
+    padding: 20px 0 20px 20px;
+}
+
+.page .form-span input {
+    height: 34px;
+    width: 250px;
+    margin: 0 0 0 5px;
+    border: 1px;
+    border-color: #DEAA2F;
+    border-radius: 3px;
+}
+
+.page .btn {
+    margin: 40px;
+    width: 200px;
+    height: auto;
+    font-size: 30px;
+    border-radius: 20px;
+    border: 1px;
+}
