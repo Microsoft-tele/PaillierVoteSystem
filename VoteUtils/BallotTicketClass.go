@@ -1,12 +1,11 @@
 package VoteUtils
 
 type BallotTicket struct {
-	ID                string   //选票ID
-	CandidateNum      int      //参选人数
-	CandidateNameList []string //候选人列表
-	Option            [][]byte // 选项
-	RSAPublicKey      []byte   // RSA公钥，由投票者写入
-	Signature         []byte   // 电子签名
+	ID            string //选票ID
+	CandidateNum  int    //参选人数
+	NameAndOption map[string][]byte
+	RSAPublicKey  []byte // RSA公钥，由投票者写入
+	Signature     []byte // 电子签名
 }
 
 //func (b *BallotTicket) InitBallotTicket(CandidateNum int, CandidateNameList []Candidate, PaillierPublicKey paillier.PublicKey) {

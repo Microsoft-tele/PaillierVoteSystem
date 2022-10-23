@@ -1,7 +1,7 @@
 package main
 
 import (
-	"SockGo/RSAUtils"
+	"RemoteRouter/RSAUtils"
 	"flag"
 	"strconv"
 )

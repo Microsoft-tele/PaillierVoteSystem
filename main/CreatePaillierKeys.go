@@ -1,7 +1,7 @@
 package main
 
 import (
-	"SockGo/CryptoUtils"
+	"RemoteRouter/CryptoUtils"
 	"flag"
 	"fmt"
 	"strconv"
