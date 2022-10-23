@@ -37,11 +37,8 @@ var ShowResultList []ShowResultMap
 
 func main() {
 	http.Handle("/paillierKeys/pub/", http.StripPrefix("/paillierKeys/pub/", http.FileServer(http.Dir("../paillierKeys/pub"))))
-
 	http.Handle("/css/img/", http.StripPrefix("/css/img/", http.FileServer(http.Dir("../css/img/"))))
-
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../css"))))
-
 	http.Handle("/mod/", http.StripPrefix("/mod/", http.FileServer(http.Dir("../mod"))))
 
 	http.HandleFunc("/loginIndex", LoginIndex)
@@ -429,8 +426,8 @@ func RecvTicket(w http.ResponseWriter, r *http.Request) {
 	//fmt.Println("Ticket对象转换成功:")
 	//fmt.Println(Ticket)
 	Tickets = append(Tickets, Ticket)
-
-	w.Header().Set("Location", "http://127.0.0.1:12345/index")
+	// 成功接收选票
+	w.Header().Set("Location", "http://127.0.0.1:12345/index") // 这个重定向可有可无
 	w.WriteHeader(302)
 }
 
