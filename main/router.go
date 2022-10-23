@@ -41,6 +41,8 @@ func main() {
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../css"))))
 	http.Handle("/mod/", http.StripPrefix("/mod/", http.FileServer(http.Dir("../mod"))))
 
+	http.HandleFunc("/api/test", Test)
+
 	http.HandleFunc("/loginIndex", LoginIndex)
 
 	http.HandleFunc("/login", Login)
@@ -82,6 +84,15 @@ func main() {
 		fmt.Println("监听错误:", err)
 		return
 	}
+}
+
+func Test(w http.ResponseWriter, r *http.Request) {
+	files, err := template.ParseFiles("../mod/top.html")
+	if err != nil {
+		fmt.Println("解析模版错误")
+		return
+	}
+	files.Execute(w, "")
 }
 
 func RegisterIndex(w http.ResponseWriter, r *http.Request) {
@@ -138,7 +149,8 @@ func SendVerifyCode(w http.ResponseWriter, r *http.Request) {
 }
 
 func ShowResult(w http.ResponseWriter, r *http.Request) {
-	files, err := template.ParseFiles("../mod/statistic.html")
+	fmt.Println("查看结果:")
+	files, err := template.ParseFiles("../mod/statistic.html", "../mod/top.html")
 	if err != nil {
 		fmt.Println("解析错误:", err)
 	}
@@ -263,7 +275,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func EntryCandidateInfo(w http.ResponseWriter, r *http.Request) {
-	files, _ := template.ParseFiles("../mod/entryCandidateInfo.html")
+	files, _ := template.ParseFiles("../mod/entryCandidateInfo.html", "../mod/top.html")
 	files.Execute(w, "")
 }
 
@@ -299,12 +311,12 @@ func Init(w http.ResponseWriter, r *http.Request) {
 	IntroductionList = make([]string, 0)
 
 	fmt.Println("初始化完毕")
-	files, _ := template.ParseFiles("../mod/index.html")
+	files, _ := template.ParseFiles("../mod/index.html", "../mod/top.html")
 	files.Execute(w, "初始化完毕")
 }
 
 func CreatePublicKey(w http.ResponseWriter, r *http.Request) {
-	files, err := template.ParseFiles("../mod/createSuccess.html", "../mod/index.html")
+	files, err := template.ParseFiles("../mod/createSuccess.html", "../mod/index.html", "../mod/top.html")
 	if err != nil {
 		return
 	}
@@ -328,7 +340,7 @@ func DownloadPaillierPublicKey(w http.ResponseWriter, r *http.Request) {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	files, err := template.ParseFiles("../mod/index.html") // 这里应该加载菜单
+	files, err := template.ParseFiles("../mod/index.html", "../mod/top.html") // 这里应该加载菜单
 	if err != nil {
 		fmt.Println("加载模版错误:", err)
 		return
@@ -341,28 +353,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func SendTickets(w http.ResponseWriter, r *http.Request) {
-	files, err := template.ParseFiles("../mod/ticket.html") // 加载选票
-
-	//can1 := VoteUtils.Candidate{
-	//	ID:           "1",
-	//	Name:         "李为君",
-	//	Introduction: "20",
-	//}
-	//can2 := VoteUtils.Candidate{
-	//	ID:           "2",
-	//	Name:         "何俭涛",
-	//	Introduction: "20",
-	//}
-	//can3 := VoteUtils.Candidate{
-	//	ID:           "3",
-	//	Name:         "徐许越",
-	//	Introduction: "20",
-	//}
-	//can4 := VoteUtils.Candidate{
-	//	ID:           "4",
-	//	Name:         "闵浩哲",
-	//	Introduction: "20",
-	//}
+	files, err := template.ParseFiles("../mod/ticket.html", "../mod/top.html") // 加载选票
 	cans := make([]VoteUtils.Candidate, 0)
 	for i := 0; i < len(NameList); i++ {
 		can := VoteUtils.Candidate{}
@@ -417,6 +408,11 @@ func RecvTicket(w http.ResponseWriter, r *http.Request) {
 	TicketData := r.PostFormValue("Ticket")
 	//fmt.Println(Ticket)
 	TicketJson := []byte(TicketData)
+	//file, err := os.OpenFile("./tmp.json", os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
+	//if err != nil {
+	//	return
+	//}
+	//file.Write(TicketJson)
 	//fmt.Println(TicketJson)
 	Ticket := VoteUtils.BallotTicket{}
 	err = json.Unmarshal(TicketJson, &Ticket)
@@ -451,6 +447,15 @@ func StatisticTickets(w http.ResponseWriter, r *http.Request) {
 		StatisticShell[i].Name = NameList[i]
 	}
 
+	tmpTick := Tickets[0] // 测试一张选票的计算结果是否正确
+	res := new(big.Int).SetInt64(0)
+	cRes, _ := paillier.Encrypt(&PaillierPrivateKey.PublicKey, res.Bytes())
+	for _, v := range tmpTick.NameAndOption {
+		cRes = paillier.AddCipher(&PaillierPrivateKey.PublicKey, cRes, v)
+	}
+	mRes, _ := paillier.Decrypt(PaillierPrivateKey, cRes)
+	fmt.Println("一张选票的计算结果:", mRes)
+
 	for i := 0; i < len(Tickets); i++ { // 整合选票
 		for k, v := range Tickets[i].NameAndOption {
 			for j := 0; j < len(NameList); j++ {
@@ -483,7 +488,7 @@ func StatisticTickets(w http.ResponseWriter, r *http.Request) {
 		}
 		ShowResultList = append(ShowResultList, resultMap)
 	}
-	files, _ := template.ParseFiles("../mod/index.html")
+	files, _ := template.ParseFiles("../mod/index.html", "../mod/top.html")
 	files.Execute(w, "开始解析投票结果，请稍后在结果栏中查看结果")
 }
 
@@ -503,7 +508,7 @@ func SelectVoter(w http.ResponseWriter, r *http.Request) {
 		}
 		VerifyList = append(VerifyList, tmp)
 	}
-	files, err := template.ParseFiles("../mod/selectVoter.html")
+	files, err := template.ParseFiles("../mod/selectVoter.html", "../mod/top.html")
 	if err != nil {
 		fmt.Println("解析失败:", err)
 	}
