@@ -13,6 +13,7 @@ import (
 	"html/template"
 	"io"
 	"math/big"
+	"math/rand"
 	"net/http"
 	"strings"
 )
@@ -71,11 +72,26 @@ func main() {
 
 	http.HandleFunc("/verifySignature", VerifySignature)
 
+	http.HandleFunc("/sendVerifyCode", SendVerifyCode)
+
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println("监听错误:", err)
 		return
 	}
+}
+
+func SendVerifyCode(w http.ResponseWriter, r *http.Request) {
+	//r.ParseForm()
+	fmt.Println("监测到发送验证码按钮：")
+	data := r.URL.RawQuery
+	fmt.Println(data)
+	rawMail := strings.Split(data, "=")
+	fmt.Println(rawMail)
+	mail := rawMail[1]
+
+	VerifyNum := rand.Intn(900000) + 99999
+
 }
 
 func ShowResult(w http.ResponseWriter, r *http.Request) {

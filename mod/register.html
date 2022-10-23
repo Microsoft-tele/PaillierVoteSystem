@@ -65,5 +65,16 @@
         </div>
 
     </form>
+
+    <script>
+        function getVerifyCode(){
+            const mail = document.getElementById('email').value;
+            const url = "http://192.168.1.106:8080/sendVerifyCode?mail=" + mail
+            alert(url)
+            const Http = new XMLHttpRequest()
+            Http.open("GET", url)
+            Http.send(mail)
+        }
+    </script>
 </body>
 </html>
