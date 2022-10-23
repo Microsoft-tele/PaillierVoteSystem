@@ -29,7 +29,7 @@
 </head>
 
 <body>
-    <form action="#" method="POST">
+    <form action="http://localhost:8080/login" method="POST"> <!-- @TODO 记得修改公网地址 -->
         <div id="login-box">
             <h1>欢迎使用Micros0ft投票系统</h1>
             <div class="form">
@@ -45,20 +45,20 @@
 
                 <div class="radio-inline">
                     <label class="idRadio">
-                        <input type="radio" name="idRadioOption" id="voter" required><label for="voter">投票人</label>
+                        <input value="1" type="radio" name="idRadioOption" id="voter" required><label for="voter">投票人</label>
                     </label>
                     <label class="idRadio">
-                        <input type="radio" name="idRadioOption" id="candidate" required><label for="candidate">候选人</label>
+                        <input value="2" type="radio" name="idRadioOption" id="candidate" required><label for="candidate">候选人</label>
                     </label>
                     <label class="idRadio">
-                        <input type="radio" name="idRadioOption" id="notary" required><label for="notary">公证人</label>
+                        <input value="3" type="radio" name="idRadioOption" id="notary" required><label for="notary">公证人</label>
                     </label>
                 </div>
             </div>
             <button type="submit" onclick="myFunction(`{{.}}`)">登录</button><br>
 
             <div class="tips">
-                <a href="http://192.168.1.110:8080/register">点击注册</a><br>
+                <a href="http://127.0.0.1:8080/registerIndex">点击注册</a><br>
                 <!--记得修改公网地址 @TODO 记得修改公网地址 -->
             </div>
         </div>

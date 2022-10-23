@@ -7,7 +7,6 @@ import (
 )
 
 var (
-	Db  *sql.DB
 	err error
 )
 
@@ -16,13 +15,14 @@ type User struct {
 	ID         int
 	Username   string
 	Password   string
-	email      string
+	Email      string
 	VerifyCode string
 	IsVerify   int
+	Db         *sql.DB
 }
 
-func InitMysql() {
-	Db, err = sql.Open("mysql", "root:660967@tcp(192.168.1.103:3306)/users")
+func (user *User) InitMysql() {
+	user.Db, err = sql.Open("mysql", "root:660967@tcp(192.168.1.103:3306)/users")
 	if err != nil {
 		fmt.Println("打开失败:", err)
 	}
@@ -30,14 +30,14 @@ func InitMysql() {
 
 // AddUser 添加user
 func (user *User) AddUser() error {
-	InitMysql()
+	user.InitMysql()
 	sqlStr := "insert into user(username, password, email) values (?,?,?)"
-	inStmt, err := Db.Prepare(sqlStr)
+	inStmt, err := user.Db.Prepare(sqlStr)
 	if err != nil {
 		fmt.Println("预编译出现错误:", err)
 		return err
 	}
-	_, err = inStmt.Exec(user.Username, user.Password, user.email)
+	_, err = inStmt.Exec(user.Username, user.Password, user.Email)
 	if err != nil {
 		fmt.Println("执行出现异常:", err)
 	}
@@ -46,16 +46,16 @@ func (user *User) AddUser() error {
 
 // SelectUserByEmail 查询是否存在此用户，并验证密码
 func (user *User) SelectUserByEmail() error {
-	InitMysql()
+	user.InitMysql()
 
 	sqlStr := "select username,password,email from user where email=?"
 
-	prepare, err := Db.Prepare(sqlStr)
+	prepare, err := user.Db.Prepare(sqlStr)
 	if err != nil {
 		fmt.Println("预编译出错:", err)
 		return err
 	}
-	row := prepare.QueryRow(user.email)
+	row := prepare.QueryRow(user.Email)
 
 	// 声明
 	var username string
