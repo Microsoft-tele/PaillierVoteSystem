@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<form name="input" action="http://localhost:12345/recvTicket" method="post">
+<form name="input" action="http://localhost:12345/recvTicket" method="post"> <!--提交给本地服务器做加密处理-->
     <div class="home">
         <div class="page">
             <div class="tittle">
@@ -29,8 +29,8 @@
                 </tr>
                 {{range .}}
                 <tr>
-                    <td>{{.Name}}</td>
-                    <td>{{.Introduction}}</td>
+                    <td class="table-info">{{.Name}}</td>
+                    <td class="table-info">{{.Introduction}}</td>
                     <td>
                         <input type="hidden" name="{{.Name}}" value="0">
                         <label>
