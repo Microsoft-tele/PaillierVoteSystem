@@ -15,7 +15,7 @@ func testUser_AddUser(t *testing.T) {
 	user := User{
 		Username: "liweijun",
 		Password: "liweijun",
-		email:    "123@gmail.com",
+		Email:    "123@gmail.com",
 	}
 	err := user.AddUser()
 	if err != nil {
@@ -28,7 +28,7 @@ func testUser_SelectUserByEmail(t *testing.T) {
 	user := User{
 		Username: "",
 		Password: "",
-		email:    "admin@admin.com",
+		Email:    "admin@admin.com",
 	}
 	err := user.SelectUserByEmail()
 	if err != nil {

@@ -7,69 +7,56 @@
 
 </head>
 <body>
-    <form action="#" method="post">
+    <form action="http://192.168.1.106:8080/register" method="post">
         <div id="register-box">
             <span>欢迎注册</span>
             <div class="tips">
-                <label class="form-label" id="tips">已有账号？<a href="http://192.168.1.105:8080/login">点击登录</a></label><br>
-                <!--记得修改公网地址-->
+                <label class="form-label" id="tips">已有账号？<a href="http://192.168.1.106:8080/loginIndex">点击登录</a></label><br>
+                <!-- @TODO 记得修改公网地址-->
             </div>
             <div class="form">
                 <div class="radio-inline">
                     <label class="form-label">请选择您的身份</label>
                     <label class="idRadio">
-                        <input type="radio" name="idRadioOption" id="voter" required><label for="voter">投票人</label>
+                        <input value="1" type="radio" name="idRadioOption" id="voter" required><label for="voter">投票人</label>
                     </label>
                     <label class="idRadio">
-                        <input type="radio" name="idRadioOption" id="candidate" required><label for="candidate">候选人</label>
+                        <input value="2" type="radio" name="idRadioOption" id="candidate" required><label for="candidate">候选人</label>
                     </label>
                     <label class="idRadio">
-                        <input type="radio" name="idRadioOption" id="notary" required><label for="notary">公证人</label>
+                        <input value="3" type="radio" name="idRadioOption" id="notary" required><label for="notary">公证人</label>
                     </label>
                 </div>
                 <div class="item">
                     <label class="form-label" for="name">昵称</label>
-                    <input id="name" class="form-input" type="text" placeholder="请输入昵称" required/><br>
+                    <input name="nickname" id="name" class="form-input" type="text" placeholder="请输入昵称"required/><br>
                 </div>
                 <div class="item">
                     <label class="form-label" for="email">邮箱</label>
-                    <input id="email" class="form-input" type="email" placeholder="请输入邮箱" required/><br>
+                    <input name="email" id="email" class="form-input" type="email" placeholder="请输入邮箱" required/><br>
                 </div>
                 <div class="item">
                     <label class="form-label" for="password">密码</label>
-                    <input id="password" class="form-input" type="password" placeholder="请输入密码" required/><br>
+                    <input name="password" id="password" class="form-input" type="password" placeholder="请输入密码" required/><br>
                 </div>
                 <div class="item">
                     <label class="form-label" for="verificationcode">验证码</label>
-                    <input id="verificationcode" class="form-input" type="text" placeholder="请输入验证码" />
-
-                    <a onclick="">
+                    <input name="verifyCode" id="verificationcode" class="form-input" type="text" placeholder="请输入验证码" />
+                    <a onclick="getVerifyCode()">
                         <button>获取验证码</button>
                     </a>
-                    <script>
-                        function getVerifyCode(){
-                            const mail = document.getElementById("email").value;
-                            const url = "http://127.0.0.2:8080/sendVerifyCode"
-                            alert(url)
-                            const Http = new XMLHttpRequest()
-                            Http.open("GET", url)
-                            Http.send()
-                        }
-                    </script>
                 </div>
-                <button id="btn" type="submit">注册</button>
+                <input id="btn" type="submit" value="注册">
             </div>
         </div>
         <div class="tip">
-            <p>{{.}}</p>
+            <p>{{.}}</p> <!--  @TODO 修改回显位置-->
         </div>
-
     </form>
-
     <script>
         function getVerifyCode(){
-            const mail = document.getElementById('email').value;
-            const url = "http://192.168.1.106:8080/sendVerifyCode?mail=" + mail
+            const mail = document.getElementById("email").value;
+            const url = "http://127.0.0.1:8080/sendVerifyCode?mail=" + mail// @TODO 修改公网地址
             alert(url)
             const Http = new XMLHttpRequest()
             Http.open("GET", url)
