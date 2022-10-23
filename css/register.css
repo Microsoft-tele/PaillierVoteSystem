@@ -4,34 +4,35 @@
 }
 
 body {
-    background: url("/css/img/login_bk_img.png") center;
-    background-size: 150% auto;
-    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-image:url("/css/img/login_bk_img.png") ;
+    position: relative;
 }
 
+
 #register-box {
-    width: 22%;
+    width: 28%;
     height: auto;
-    margin-left: 1250px;
-    margin-top: 6%;
-    margin-bottom: 250px;
+    position: absolute;
+    left: 65% ;
+    margin-top: 4%;
     text-align: left;
     background: #ececec;
-    padding: 20px 40px;
     border-radius: 10px;
     opacity: 0.9;
+    padding: calc(1%);
 }
 
 #register-box span {
     color: black;
     font-style: oblique;
-    font-size: 30px;
+    font-size: 2.5vw;
     font-weight: bolder ;
 }
 
 #register-box .tips{
-    padding: 10px 10px 10px 0;
-    font-size: 16px;
+    padding: 2% 2% 2% 0;
+    font-size: 1.1vw;
 }
 
 #register-box .tips a {
@@ -44,52 +45,48 @@ body {
     color: #3674ff;
 }
 
-#register-box .form {
-    margin-top: 20px;
-}
-
 #register-box .form .radio-inline {
-    padding: 30px 0;
+    padding: 10% 0 6% 0;
 }
 
 #register-box .form .radio-inline .form-label {
-    font-size: 20px;
+    font-size: 1.4vw;
 }
 
 #register-box .form .radio-inline .idRadio {
-    font-size: 18px;
+    font-size: 1.3vw;
 }
 
 #register-box .form .item {
-    padding: 20px 0;
-    font-size: 20px;
+    padding: 6% 0;
+    font-size: 1.4vw;
 }
 
 #register-box .form .item input {
-    height: 34px;
-    width: 320px;
+    height: 100%;
+    width: 74%;
     color: #000000;
     border-radius: 5px;
     border-width: 2px;
     border: #727272;
-    margin: 0 0 0 25px;
-    font-size: 16px;
+    margin: 0 0 0 5%;
+    font-size: 1.3vw;
 }
 
 #register-box .form #verificationcode {
-    width: 200px;
-    margin: 0 0 0 5px;
+    width: 52%;
+    margin: 0 0 0 1%;
 }
 
 #register-box .form .item button {
-    height: 34px;
-    width: 110px;
+    height: 4%;
+    width: 20%;
     color: #3d3d3d;
     border-radius: 5px;
     border-width: 1px;
     border: #727272;
     background-color: #ffffff;
-    font-size: 16px;
+    font-size: 1.0vw;
 }
 
 #register-box .form .item button:hover {
@@ -98,26 +95,16 @@ body {
     border: #5f90ff;
 }
 
-#register-box .btn {
-    margin: 40px 0;
-    background-color: #62a1f8;
-    border-radius: 30px;
-    border-width: 0;
-    width:390px;
-    height: 50px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #ffffff;
+#register-box #btn {
+    height: 2.5vw;
+    width: 60%;
+    border-radius: 10px;
+    margin: 5% 20% 10% 20%;
+    color: #000000;
+    background-color: #80a3ff;
+
 }
 
-#register-box .btn:hover {
+#register-box #btn:hover {
     cursor: pointer;
-}
-
-#register-box .tip {
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    color: #ff1c1c;
 }
