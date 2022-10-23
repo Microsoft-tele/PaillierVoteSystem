@@ -1,21 +1,34 @@
 package main
 
 import (
-	"SockGo/CryptoUtils"
-	"SockGo/ShellUtils"
-	"SockGo/VoteUtils"
-	"SockGo/paillier"
+	"RemoteRouter/CryptoUtils"
+	"RemoteRouter/ShellUtils"
+	"RemoteRouter/VoteUtils"
+	"RemoteRouter/paillier"
+	"crypto"
+	"crypto/rsa"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
+	"math/big"
 	"net/http"
+	"strings"
 )
 
 var PaillierPrivateKey *paillier.PrivateKey // 保存本地paillier公私钥
 var Tickets []VoteUtils.BallotTicket        // 保存投票人上传的选票
 var NameList []string
 var IntroductionList []string
+
+type ShowResultMap struct {
+	Name      string
+	Res       string
+	ResCipher []string
+}
+
+var ShowResultList []ShowResultMap
 
 func main() {
 	http.Handle("/paillierKeys/pub/", http.StripPrefix("/paillierKeys/pub/", http.FileServer(http.Dir("../paillierKeys/pub"))))
@@ -25,6 +38,8 @@ func main() {
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../css"))))
 
 	http.Handle("/mod/", http.StripPrefix("/mod/", http.FileServer(http.Dir("../mod"))))
+
+	http.HandleFunc("/loginIndex", LoginIndex)
 
 	http.HandleFunc("/login", Login)
 
@@ -49,6 +64,13 @@ func main() {
 	http.HandleFunc("/downloadPaillierPublicKey", DownloadPaillierPublicKey) // 用户必须先下载公钥，再上传选票之前必须上传本公钥到服务器
 
 	http.HandleFunc("/createPublicKey", CreatePublicKey) // 只有公证人才有访问的权利，使用本函数之前要对公证人做身份验证
+
+	http.HandleFunc("/showResult", ShowResult)
+
+	http.HandleFunc("/selectVoter", SelectVoter)
+
+	http.HandleFunc("/verifySignature", VerifySignature)
+
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println("监听错误:", err)
@@ -56,9 +78,21 @@ func main() {
 	}
 }
 
-func Login(w http.ResponseWriter, r *http.Request) {
+func ShowResult(w http.ResponseWriter, r *http.Request) {
+	files, err := template.ParseFiles("../mod/statistic.html")
+	if err != nil {
+		fmt.Println("解析错误:", err)
+	}
+	files.Execute(w, ShowResultList)
+}
+
+func LoginIndex(w http.ResponseWriter, r *http.Request) {
 	files, _ := template.ParseFiles("../mod/login.html")
 	files.Execute(w, "")
+}
+
+func Login(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func Register(w http.ResponseWriter, r *http.Request) {
@@ -210,7 +244,7 @@ func RecvData(w http.ResponseWriter, r *http.Request) {
 	//}
 	w.Header().Set("Location", "/mod/paillier")
 	w.WriteHeader(302)
-} // 使用缓存接收整个数据包
+}
 
 func RecvTicket(w http.ResponseWriter, r *http.Request) {
 
@@ -227,27 +261,137 @@ func RecvTicket(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("转换为Ticket对象失败:", err)
 	}
+	//fmt.Println("Ticket对象转换成功:")
 	//fmt.Println(Ticket)
 	Tickets = append(Tickets, Ticket)
-	//res := new(big.Int).SetInt64(0)
-	//cRes, _ := paillier.Encrypt(&PaillierPrivateKey.PublicKey, res.Bytes())
-	//for i := 0; i < Ticket.CandidateNum; i++ {
-	//	cRes = paillier.AddCipher(&PaillierPrivateKey.PublicKey, cRes, Ticket.Option[i])
-	//}
-	//fmt.Println("调试：相加结果:", cRes)
-	//decrypt, err := paillier.Decrypt(PaillierPrivateKey, cRes)
-	//if err != nil {
-	//	return
-	//}
-	//fmt.Println("解密的数字:", new(big.Int).SetBytes(decrypt).String())
 
+	w.Header().Set("Location", "http://127.0.0.1:12345/index")
+	w.WriteHeader(302)
 }
+
+type Statistic struct {
+	Name         string   // 记录候选人姓名
+	Options      [][]byte //记录候选人得分情况
+	OptionsStr   []string // 转换为字符串
+	CalResCipher []byte   // 相加结果
+	CalResByte   []byte   // 解密结果
+	CalResInt    string
+}
+
+var StatisticShell []Statistic
 
 func StatisticTickets(w http.ResponseWriter, r *http.Request) {
 	PaillierPrivateKey = CryptoUtils.GetKeysFromJson("../paillierKeys/pri/key")
 	fmt.Println("解析Paillier公钥成功:")
-	fmt.Println("打印调试信息:")
-	for i, v := range Tickets {
-		fmt.Printf("[%d : %v]\n", i, v.CandidateNameList)
+
+	StatisticShell = make([]Statistic, len(NameList)) // 每一个候选人的统计结果
+	for i := 0; i < len(NameList); i++ {
+		StatisticShell[i].Name = NameList[i]
+	}
+
+	for i := 0; i < len(Tickets); i++ { // 整合选票
+		for k, v := range Tickets[i].NameAndOption {
+			for j := 0; j < len(NameList); j++ {
+				if k == StatisticShell[j].Name {
+					StatisticShell[j].Options = append(StatisticShell[j].Options, v)
+				}
+			}
+		}
+	}
+	ShowResultList = make([]ShowResultMap, 0)
+	for i := 0; i < len(StatisticShell); i++ { //每一个候选人的统计结果
+		res := new(big.Int).SetInt64(0)
+		cRes, _ := paillier.Encrypt(&PaillierPrivateKey.PublicKey, res.Bytes())
+		for j := 0; j < len(StatisticShell[0].Options); j++ { // 两个人投票
+			StatisticShell[i].OptionsStr = append(StatisticShell[i].OptionsStr, string(StatisticShell[i].Options[j]))
+			cRes = paillier.AddCipher(&PaillierPrivateKey.PublicKey, cRes, StatisticShell[i].Options[j])
+		}
+		StatisticShell[i].CalResCipher = cRes                      // 加运算后的密文结果
+		decrypt, err := paillier.Decrypt(PaillierPrivateKey, cRes) // 解密
+		if err != nil {
+			return
+		}
+		StatisticShell[i].CalResByte = decrypt                                // 记录解密结果
+		StatisticShell[i].CalResInt = new(big.Int).SetBytes(decrypt).String() // 转换为int型字符串
+		fmt.Printf("[%v]的得票情况:[%v]\n", StatisticShell[i].Name, StatisticShell[i].CalResInt)
+		resultMap := ShowResultMap{
+			Name:      StatisticShell[i].Name,
+			Res:       StatisticShell[i].CalResInt,
+			ResCipher: StatisticShell[i].OptionsStr,
+		}
+		ShowResultList = append(ShowResultList, resultMap)
+	}
+	files, _ := template.ParseFiles("../mod/index.html")
+	files.Execute(w, "开始解析投票结果，请稍后在结果栏中查看结果")
+}
+
+type tmpStruct struct {
+	ID        string
+	RSA       string
+	Signature string
+}
+
+func SelectVoter(w http.ResponseWriter, r *http.Request) {
+	VerifyList := make([]tmpStruct, 0)
+	for i := 0; i < len(Tickets); i++ {
+		tmp := tmpStruct{
+			ID:        Tickets[i].ID,
+			RSA:       string(Tickets[i].RSAPublicKey),
+			Signature: string(Tickets[i].Signature),
+		}
+		VerifyList = append(VerifyList, tmp)
+	}
+	files, err := template.ParseFiles("../mod/selectVoter.html")
+	if err != nil {
+		fmt.Println("解析失败:", err)
+	}
+	files.Execute(w, VerifyList)
+}
+func VerifySignature(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("进入验证界面")
+	r.ParseForm()
+	form := r.PostForm
+	var VoterId string
+	for k, v := range form {
+		fmt.Printf("[%v : %v]\n", k, v)
+		VoterId = k
+	}
+	Ticket := VoteUtils.BallotTicket{
+		ID:            "",
+		CandidateNum:  0,
+		NameAndOption: nil,
+		RSAPublicKey:  nil,
+		Signature:     nil,
+	}
+	for i := 0; i < len(Tickets); i++ {
+		if Tickets[i].ID == VoterId {
+			Ticket = Tickets[i]
+			break
+		}
+	}
+	var pubKey rsa.PublicKey
+	err := json.Unmarshal(Ticket.RSAPublicKey, &pubKey)
+	if err != nil {
+		fmt.Println("转换RSA公钥失败:", err)
+		return
+	}
+	var name []string
+	name = strings.Split(Ticket.ID, "_")
+	name1 := name[len(name)-1]
+	fmt.Println("要验证的姓名是:", name1)
+	hashed := sha256.Sum256([]byte(name1))
+	err = rsa.VerifyPKCS1v15(&pubKey, crypto.SHA256, hashed[:], Ticket.Signature)
+	flag := 1
+	if err != nil {
+		fmt.Println("验证签名失败，本次投票可能产生错误，请公证人慎重选择：", err)
+		flag = 0
+	}
+
+	files, _ := template.ParseFiles("../mod/index.html")
+	if flag == 1 {
+		fmt.Println("验证签名成功:")
+		files.Execute(w, "验证签名成功")
+	} else {
+		files.Execute(w, "验证签名失败")
 	}
 }

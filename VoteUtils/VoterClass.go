@@ -1,7 +1,7 @@
 package VoteUtils
 
 import (
-	"SockGo/paillier"
+	"RemoteRouter/paillier"
 	"crypto/rand"
 	"fmt"
 	"math/big"

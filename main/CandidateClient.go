@@ -1,7 +1,7 @@
 package main
 
 import (
-	"SockGo/VoteUtils"
+	"RemoteRouter/VoteUtils"
 	"encoding/json"
 	"fmt"
 	"net"
@@ -12,7 +12,7 @@ var Can = VoteUtils.Candidate{}
 
 func main() {
 
-	Can.SetCandidateInfo()
+	//Can.SetCandidateInfo()
 	fmt.Println(Can)
 LOOP:
 	ServiceHostIp := "127.0.0.1"

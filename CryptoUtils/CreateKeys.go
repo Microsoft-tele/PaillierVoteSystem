@@ -1,7 +1,7 @@
 package CryptoUtils
 
 import (
-	"SockGo/paillier"
+	"RemoteRouter/paillier"
 	"crypto/rand"
 	"encoding/json"
 	"fmt"

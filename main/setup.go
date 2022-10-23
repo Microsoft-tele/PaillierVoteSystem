@@ -1,7 +1,7 @@
 package main
 
 import (
-	"SockGo/ShellUtils"
+	"RemoteRouter/ShellUtils"
 	"fmt"
 )
 

@@ -1,4 +1,4 @@
-module SockGo
+module RemoteRouter
 
 go 1.19
 

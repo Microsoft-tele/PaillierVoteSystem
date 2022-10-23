@@ -1,7 +1,7 @@
 package main
 
 import (
-	"SockGo/VoteUtils"
+	"RemoteRouter/VoteUtils"
 	"fmt"
 )
 

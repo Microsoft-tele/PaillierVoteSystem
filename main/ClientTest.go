@@ -1,9 +1,9 @@
 package main
 
 import (
-	"SockGo/ConveyUtils"
-	"SockGo/RSAUtils"
-	"SockGo/ShellUtils"
+	"RemoteRouter/ConveyUtils"
+	"RemoteRouter/RSAUtils"
+	"RemoteRouter/ShellUtils"
 	"fmt"
 	"net"
 )
