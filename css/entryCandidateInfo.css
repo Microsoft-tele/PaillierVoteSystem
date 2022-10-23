@@ -6,12 +6,12 @@
 .home {
     height: 150%;
     margin: 0 auto;
-    margin-top: 6%;
+    margin-top: 4%;
     margin-left: 10%;
 }
 
 .page {
-    padding: 7.5px 5px 7.5px 20px;
+    padding: 1.5% 1% 1.5% 4%;
     background: #DEAA2F;
     position: absolute;
     text-align: center;
@@ -38,98 +38,153 @@
     width: 50%;
 }
 
-.page:after {
-    -moz-transform: rotate(3deg);
-    -webkit-transform: rotate(3deg);
-    -o-transform: rotate(3deg);
-    -ms-transform: rotate(3deg);
-    transform: rotate(3deg);
-    left: auto;
-    right: 10px;
-}
+/*.page:after {*/
+/*    -moz-transform: rotate(3deg);*/
+/*    -webkit-transform: rotate(3deg);*/
+/*    -o-transform: rotate(3deg);*/
+/*    -ms-transform: rotate(3deg);*/
+/*    transform: rotate(3deg);*/
+/*    left: auto;*/
+/*    right: 10px;*/
+/*}*/
 
 .page .tittle {
     text-align: left;
-    margin: 20px 0;
+    margin: 1% 0 2% 0;
     font-weight: bolder;
-    font-size: 60px;
+    font-size: 2.0vw;
+    font-family: "微软雅黑";
 }
 
 .page #tittle1 {
-    font-size: 30px;
-    margin: 20px 0;
+    font-size: 1.5vw;
+    margin: 1% 0;
     text-align: left;
     font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.page .form-new {
+    position: relative;
+}
+
+.page .form-new hr {
+    margin-top: 3.5vw;
 }
 
 .page #Ticket {
-    margin: 30px 300px;
-    width: 850px;
-    font-size: 28px;
+    margin: 1.5% 10%;
+    width: 40% ;
+    font-size: 1.0vw;
+    font-family: "微软雅黑";
     border: 2px solid #000000;
 }
 
 .page .new-bnt {
-    width: 40px;
-    height: auto;
-    font-size: 30px;
-    border-radius: 20px;
+    position: absolute;
+    left: 20%;
+    font-size: 1vw;
+    text-align: center;
+    width: 3vw;
+    height: 1.5vw;
+    border-radius: 0;
     color: #000000;
-    background-color: #00ff20;
-    margin: 0 300px 50px 300px;
-    text-align: revert;
+    background-color: #676666;
+    margin: 0 6% 4% 8%;
 }
 
 .page .new-bnt:hover {
     cursor: pointer;
-    background-color: #00a3ff;
+    background-color: #ffffff;
 }
 
-.page #Ticket .tittle2 {
-    font-size: 30px;
+.page #Ticket #tittle2_1 {
+    font-size: 1.3vw;
+    font-family: "微软雅黑";
+    width: 1vw;
+}
+
+.page #Ticket #tittle2_2 {
+    font-size: 1.3vw;
+    width: 4vw;
 }
 
 .page #tittle3 {
-    font-size: 30px;
-    margin: 20px 0;
+    font-size: 1.5vw;
+    font-family: "微软雅黑";
+    margin: 1% 0;
     text-align: left;
     font-weight: bold;
 }
 
 .page .form-span {
     text-align: left;
-    margin: 40px 0;
+    margin: 0 4%;
+    font-size: 1.3vw;
+    font-family: "微软雅黑";
 }
 
 .page .form-span #topic {
-    font-size: 25px;
-    padding: 20px 0 20px 80px;
+    padding: 1% 0;
+}
+
+.page .form-span #topic input {
+    height: 2vw;
+    margin: 0 2%;
+    width: 30%;
 }
 
 .page .form-span #date {
-    font-size: 25px;
-    padding: 20px 0 20px 20px;
+    padding: 1% 0;
+}
+
+.page .form-span #date input {
+    height: 2vw;
+    margin: 0 2%;
+    width: 26.5%;
 }
 
 .page .form-span #ticker-num {
-    font-size: 25px;
-    padding: 20px 0 20px 20px;
+    padding: 1% 0;
+}
+
+.page .form-span #ticker-num input {
+    margin: 0 2%;
+    width: 21.2%;
 }
 
 .page .form-span input {
-    height: 34px;
-    width: 250px;
-    margin: 0 0 0 5px;
+    height: 2vw;
     border: 1px;
     border-color: #DEAA2F;
     border-radius: 3px;
 }
 
 .page .btn {
-    margin: 40px;
-    width: 200px;
+    margin: 4% 0 2% 0;
+    width: 15%;
     height: auto;
-    font-size: 30px;
+    font-size: 1.5vw;
+    font-family: "微软雅黑";
     border-radius: 20px;
     border: 1px;
 }
+
+.page .btn:hover {
+    cursor: pointer;
+}
+
+head script input {
+    height: 10vw;
+}
+
+.page #Ticket #table-input_1 {
+    height: 1.5vw;
+    width: 99%;
+}
+
+.page #Ticket #table-input_2 {
+    height: 1.5vw;
+    width: 99%;
+}
+
