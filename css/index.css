@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-size: 100% auto;
+    position: relative;
+}
+
+.page {
+    position: absolute;
+    margin-top: 6%;
+    left: 3%;
+    width: 80%;
+    height: auto;
+    background: #ff1c1c;
+}
+
+.page .img-tab {
+    position: absolute;
+}
+
+
+.page .img-tab #pic_1 {
+    position: relative;
+    width: 20vw;
+    height: 30vw;
+    border-radius: 50px;
+    padding: 1.5vw;
+    filter: grayscale(0%);
+}
+
+.page .img-tab #pic_2 {
+    position: relative;
+    width: 20vw;
+    height: 30vw;
+    border-radius: 50px;
+    padding: 1.5vw;
+    filter: grayscale(80%);
+}
+
+.page .img-tab #pic_3 {
+    position: relative;
+    width: 20vw;
+    height: 30vw;
+    border-radius: 50px;
+    padding: 1.5vw;
+    filter: grayscale(80%);
+}
+
+.page .img-tab #pic_4 {
+    position: relative;
+    width: 20vw;
+    height: 30vw;
+    border-radius: 50px;
+    padding: 1.5vw;
+    filter: grayscale(80%);
+}
+
+.page .img-tab #deleteKey {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    width: 10%;
+    height: auto;
+    font-size: 1.5vw;
+}
+
+.page .img-tab #deleteKey:hover {
+    cursor: pointer;
+}
+
+.page .img-tab #newProject {
+    position: absolute;
+    top: 65%;
+    left: 8%;
+    width: 10%;
+    height: auto;
+    font-size: 1.5vw;
+}
+
+.page .img-tab #newProject:hover {
+    cursor: pointer;
+}
+
+.page .img-tab #nextStep_1 {
+    position: absolute;
+    top: 88%;
+    left: 15%;
+    width: 10%;
+    height: auto;
+    font-size: 1.0vw;
+    color: #ffffff;
+    border: 0;
+    background: rgba(0,0,0,0);
+}
+
+.page .img-tab #nextStep_1:hover {
+    cursor: pointer;
+    color: #9cffe9;
+}
+
+.page .img-tab #enterInformation {
+    position: absolute;
+    top: 50%;
+    left: 33%;
+    width: 10%;
+    height: auto;
+    font-size: 1.5vw;
+}
+
+.page .img-tab #enterInformation:hover {
+    cursor: pointer;
+}
+
+.page .img-tab #nextStep_2 {
+    position: absolute;
+    top: 88%;
+    left: 40%;
+    width: 10%;
+    height: auto;
+    font-size: 1.0vw;
+    color: #ffffff;
+    border: 0;
+    background: rgba(0,0,0,0);
+}
+
+.page .img-tab #nextStep_2:hover {
+    cursor: pointer;
+    color: #9cffe9;
+}
+
+.page .img-tab #countNum {
+    position: absolute;
+    top: 50%;
+    left: 58%;
+    width: 10%;
+    height: auto;
+    font-size: 1.5vw;
+}
+
+.page .img-tab #countNum:hover {
+    cursor: pointer;
+}
+
+.page .img-tab #nextStep_3 {
+    position: absolute;
+    top: 88%;
+    left: 65%;
+    width: 10%;
+    height: auto;
+    font-size: 1.0vw;
+    color: #ffffff;
+    border: 0;
+    background: rgba(0,0,0,0);
+}
+
+.page .img-tab #nextStep_3:hover {
+    cursor: pointer;
+    color: #9cffe9;
+}
+
+.page .img-tab #queryRes {
+    position: absolute;
+    top: 50%;
+    left: 83%;
+    width: 10%;
+    height: auto;
+    font-size: 1.5vw;
+}
+
+.page .img-tab #queryRes:hover {
+    cursor: pointer;
+}
+
+.page .img-tab #verifySign {
+    position: absolute;
+    top: 65%;
+    left: 83%;
+    width: 10%;
+    height: auto;
+    font-size: 1.5vw;
+}
+
+.page .img-tab #verifySign:hover {
+    cursor: pointer;
+}
+
+.page .img-tab #nextStep_4 {
+    position: absolute;
+    top: 88%;
+    left: 90%;
+    width: 10%;
+    height: auto;
+    font-size: 1.0vw;
+    color: #ffffff;
+    border: 0;
+    background: rgba(0,0,0,0);
+}
+
+.page .img-tab #nextStep_4:hover {
+    cursor: pointer;
+    color: #9cffe9;
+}
+
+.labelMod #retLabel {
+    position: absolute;
+    text-decoration: none;
+    color: #000;
+    background: #ffc;
+    margin-top: 7%;
+    left: 9%;
+    width: 8vw;
+    height: 8vw;
+    padding: 1vw;
+    font-size: 1vw;
+    font-family: "AR PL UKai HK";
+    -moz-box-shadow: 5px 5px 7px rgba(33,33,33,1);
+    -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    -webkit-transform:rotate(-8deg);
+    -o-transform:rotate(-8deg);
+    -moz-transform:rotate(-8deg);
+}
+
+.labelMod #labelTape {
+    position: absolute;
+    text-decoration: none;
+    background: #dedede;
+    opacity: 0.4;
+    margin-top: 6%;
+    left: 10%;
+    width: 6vw;
+    height: 2vw;
+    -webkit-transform:rotate(8deg);
+    -o-transform:rotate(8deg);
+    -moz-transform:rotate(8deg);
+}
