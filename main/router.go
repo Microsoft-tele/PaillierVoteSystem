@@ -300,7 +300,7 @@ func RecvCandidateInfo(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("姓名", NameList)
 	fmt.Println("简介", IntroductionList)
 
-	files, _ := template.ParseFiles("../mod/index.html")
+	files, _ := template.ParseFiles("../mod/entryCandidateInfo.html", "../mod/top.html")
 	files.Execute(w, "设置选票成功")
 }
 
