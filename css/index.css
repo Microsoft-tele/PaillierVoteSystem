@@ -204,7 +204,7 @@ body {
     color: #9cffe9;
 }
 
-.labelMod #retLabel {
+.labelMod #retLabel1 {
     position: absolute;
     text-decoration: none;
     color: #000;
@@ -224,7 +224,7 @@ body {
     -moz-transform:rotate(-8deg);
 }
 
-.labelMod #labelTape {
+.labelMod #labelTape1 {
     position: absolute;
     text-decoration: none;
     background: #dedede;
@@ -237,3 +237,4 @@ body {
     -o-transform:rotate(8deg);
     -moz-transform:rotate(8deg);
 }
+

@@ -20,9 +20,8 @@
             var img2 = document.getElementById("pic_2")
             var img3 = document.getElementById("pic_3")
             var img4 = document.getElementById("pic_4")
-            var lab1 = document.getElementById("retLabel")
-            var lab2 = document.getElementById("labelTape")
-
+            var tape1 = document.getElementById("labelTape1")
+            var ret2 = document.getElementById("retLabel1")
 
             if (value == "btn0"){
                 button0.hidden = "hidden"
@@ -34,11 +33,10 @@
                 img2.style.WebkitFilter = "grayscale(0%)";
                 img3.style.WebkitFilter = "grayscale(80%)";
                 img4.style.WebkitFilter = "grayscale(80%)";
+                tape1.hidden = "hidden"
+                ret2.hidden = "hidden"
             }
-            if (value == "btn1"){
-                // lab1.hidden = ""
-                // lab2.hidden = ""
-            }
+
             if (value == "btn2"){
                 button0.hidden = ""
             }
@@ -70,18 +68,20 @@
                 button5.hidden = ""
             }
         }
-        function autoClick(name){
+        function autoClick(){
             var button1 = document.getElementById("newKey-btn")
             var button2 = document.getElementById("deleteKey-btn")
+
             button2.click()
             button1.click()
-            func(name)
         }
+
     </script>
 </head>
+
 <body>
 {{template "top.html"}}
-<!-- {{.}} -->
+<!--<p id="ret">{{.}}</p>-->
 <div class="page">
     <table class="img-tab">
         <tr>
@@ -89,7 +89,7 @@
                 <div class="firstPage">
                     <img id="pic_1" src="/css/img/login_bk_img.png" alt="">
                     <input id="nextStep_1" hidden="hidden" type="button" value="下一步>" name="btn0" onclick="func(name)">
-                    <input id="deleteKey" type="button" value="重置密钥" name="btn1" onclick="autoClick(name)">
+                    <input id="deleteKey" type="button" value="重置密钥" name="btn1" onclick="autoClick()">
                     <input id="newProject" type="button" value="新建投票" name="btn2" onclick="func(name)">
                 </div>
             </td>
@@ -134,44 +134,31 @@
     </table>
 </div>
 
-<div class="hideBtn">
-    <div class="newKey">
-        <!-- @TODO 修改公网地址-->
 <div>
-    <div>
-        <a href="http://localhost:8080/index">
-            <button>
-                首页
-            </button>
-        </a>
-    </div>
-    <div>
-        <a href="http://localhost:8080/createPublicKey">
-            <button id="newKey-btn" hidden="hidden" name="btn10">
-                创建Paillier密钥对(如不创建新的Paillier公钥则使用本地已有的密钥对)
-            </button>
-        </a>
-    </div>
-    <div class="deleteKey">
-        <!-- @TODO 修改公网地址-->
-        <a href="http://localhost:8080/init">
-            <button id="deleteKey-btn" hidden="hidden" name="btn11">
-                初始化系统(删除已有的Paillier公钥)
-            </button>
-        </a>
-    </div>
+    <a href="http://localhost:8080/createPublicKey">
+        <button id="newKey-btn" hidden="hidden" name="btn10">
+            创建Paillier密钥对(如不创建新的Paillier公钥则使用本地已有的密钥对)
+        </button>
+    </a>
+</div>
+<div class="deleteKey">
+    <!-- @TODO 修改公网地址-->
+    <a href="http://localhost:8080/init">
+        <button id="deleteKey-btn" hidden="hidden" name="btn11">
+            初始化系统(删除已有的Paillier公钥)
+        </button>
+    </a>
 </div>
 
-<div class="labelMod">
-    <div id="retLabel" >
+<div class="labelMod" >
+    <div id="retLabel1">
         <p>{{.}}</p>
     </div>
 
-    <div id="labelTape" >
+    <div id="labelTape1">
         <p></p>
     </div>
 </div>
-
 
 </body>
 </html>
