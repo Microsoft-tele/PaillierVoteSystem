@@ -80,7 +80,8 @@
     </script>
 </head>
 <body>
-
+{{template "top.html"}}
+<!-- {{.}} -->
 <div class="page">
     <table class="img-tab">
         <tr>
@@ -136,6 +137,15 @@
 <div class="hideBtn">
     <div class="newKey">
         <!-- @TODO 修改公网地址-->
+<div>
+    <div>
+        <a href="http://localhost:8080/index">
+            <button>
+                首页
+            </button>
+        </a>
+    </div>
+    <div>
         <a href="http://localhost:8080/createPublicKey">
             <button id="newKey-btn" hidden="hidden" name="btn10">
                 创建Paillier密钥对(如不创建新的Paillier公钥则使用本地已有的密钥对)
