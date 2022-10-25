@@ -55,7 +55,7 @@ func main() {
 
 	http.HandleFunc("/recvCandidateInfo", RecvCandidateInfo)
 
-	http.HandleFunc("/", Index)
+	http.HandleFunc("/", LoginIndex)
 
 	http.HandleFunc("/index", Index) // 首页
 
@@ -79,7 +79,7 @@ func main() {
 
 	http.HandleFunc("/sendVerifyCode", SendVerifyCode)
 
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":80", nil)
 	if err != nil {
 		fmt.Println("监听错误:", err)
 		return
@@ -488,7 +488,7 @@ func StatisticTickets(w http.ResponseWriter, r *http.Request) {
 		}
 		ShowResultList = append(ShowResultList, resultMap)
 	}
-	files, _ := template.ParseFiles("../mod/index.html", "../mod/top.html")
+	files, _ := template.ParseFiles("../mod/result.html", "../mod/top.html")
 	files.Execute(w, "开始解析投票结果，请稍后在结果栏中查看结果")
 }
 
@@ -555,7 +555,7 @@ func VerifySignature(w http.ResponseWriter, r *http.Request) {
 		flag = 0
 	}
 
-	files, _ := template.ParseFiles("../mod/index.html")
+	files, _ := template.ParseFiles("../mod/verifySignatureResult.html", "../mod/top.html")
 	if flag == 1 {
 		fmt.Println("验证签名成功:")
 		files.Execute(w, "验证签名成功")
