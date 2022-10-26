@@ -5,6 +5,18 @@
     <title>选票信息录入</title>
     <link rel="stylesheet" href="/css/entryCandidateInfo.css">
     <script>
+        // @TODO
+        var modal = document.getElementById('myModal');
+        var btn = document.getElementById("Btn");
+        var span = document.querySelector('.close');
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+
         function addtr(){
             var tableObj = document.getElementById("Ticket")
             var trObj = document.createElement("tr")
@@ -19,11 +31,13 @@
 
             tableObj.appendChild(trObj)
         }
+        function showtxt(){
+
+        }
     </script>
 </head>
 <body>
 {{template "top.html"}}
-{{.}}
 <div class="home">
     <div class="page">
         <div class="tittle">
@@ -56,8 +70,15 @@
                     <span>投票人最多可投票数:</span><input type="number" placeholder="请选择">
                 </div>
             </div>
+            <input id="btn" type="submit" value="提交" name="MaxNum">
+<!--            @TODO-->
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>{{.}}</p>
+                </div>
+            </div>
 
-            <input class="btn" type="submit" value="提交" name="MaxNum">
         </form>
       </div>
 </div>
