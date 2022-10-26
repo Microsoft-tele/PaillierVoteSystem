@@ -8,8 +8,8 @@
         function addtr(){
             var tableObj = document.getElementById("Ticket")
             var trObj = document.createElement("tr")
-
             var tdObj = document.createElement("td")
+
             tdObj.innerHTML = `<input id="table-input_1" type="text" name="Name">`
             trObj.appendChild(tdObj)
 
@@ -17,7 +17,18 @@
             tdObj.innerHTML = `<input id="table-input_2" type="text" name="Intro">`
             trObj.appendChild(tdObj)
 
+            var tdObj = document.createElement("td")
+            tdObj.innerHTML = `<input id="table-input_3" type="button" name="Delete" value="删除" onclick="deltr(this)">`
+            trObj.appendChild(tdObj)
+
             tableObj.appendChild(trObj)
+        }
+    </script>
+    <script>
+        function deltr(trObj){
+            var tableObj = document.getElementById("Ticket")
+            var tableObj1 = trObj.parentNode.parentNode;
+            tableObj.removeChild(tableObj1)
         }
     </script>
 
@@ -36,6 +47,7 @@
                 <tr>
                     <td id="tittle2_1">姓名</td>
                     <td id="tittle2_2">候选人简介</td>
+                    <td id="tittle2_3">操作</td>
                 </tr>
             </table>
 
@@ -58,9 +70,9 @@
             </div>
             <input id="btn" type="submit" value="提交" name="MaxNum">
 
-            <p>{{.}}</p>
+            <p id="retTip">{{.}}</p>
         </form>
-      </div>
+    </div>
 </div>
 </body>
 </html>
