@@ -71,9 +71,11 @@
         function autoClick(){
             var button1 = document.getElementById("newKey-btn")
             var button2 = document.getElementById("deleteKey-btn")
+            var lab = document.getElementById("labelMod")
 
             button2.click()
             button1.click()
+            lab.removeAttribute("hidden")
         }
 
     </script>
@@ -150,7 +152,7 @@
     </a>
 </div>
 
-<div class="labelMod" >
+<div id="labelMod" hidden>
     <div id="retLabel1">
         <p>{{.}}</p>
     </div>
