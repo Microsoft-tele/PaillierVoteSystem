@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>首页</title>
     <link rel="stylesheet" href="/css/index.css">
+    <style>
+        
+    </style>
     <script>
         function func(value){
             var button0 = document.getElementById("nextStep_1")
@@ -20,8 +23,6 @@
             var img2 = document.getElementById("pic_2")
             var img3 = document.getElementById("pic_3")
             var img4 = document.getElementById("pic_4")
-            var tape1 = document.getElementById("labelTape1")
-            var ret2 = document.getElementById("retLabel1")
 
             if (value == "btn0"){
                 button0.hidden = "hidden"
@@ -33,10 +34,7 @@
                 img2.style.WebkitFilter = "grayscale(0%)";
                 img3.style.WebkitFilter = "grayscale(80%)";
                 img4.style.WebkitFilter = "grayscale(80%)";
-                tape1.hidden = "hidden"
-                ret2.hidden = "hidden"
             }
-
             if (value == "btn2"){
                 button0.hidden = ""
             }
@@ -71,11 +69,10 @@
         function autoClick(){
             var button1 = document.getElementById("newKey-btn")
             var button2 = document.getElementById("deleteKey-btn")
-            var lab = document.getElementById("labelMod")
 
             button2.click()
             button1.click()
-            lab.removeAttribute("hidden")
+            // func("btn1")
         }
 
     </script>
@@ -93,6 +90,7 @@
                     <input id="nextStep_1" hidden="hidden" type="button" value="下一步>" name="btn0" onclick="func(name)">
                     <input id="deleteKey" type="button" value="重置密钥" name="btn1" onclick="autoClick()">
                     <input id="newProject" type="button" value="新建投票" name="btn2" onclick="func(name)">
+
                 </div>
             </td>
             <td>
@@ -152,15 +150,10 @@
     </a>
 </div>
 
-<div id="labelMod" hidden>
-    <div id="retLabel1">
-        <p>{{.}}</p>
-    </div>
+<p id="retLabel1">{{.}}</p>
+<p id="labelTape1"></p>
 
-    <div id="labelTape1">
-        <p></p>
-    </div>
-</div>
+
 
 </body>
 </html>
