@@ -129,6 +129,7 @@ func SendVerifyCode(w http.ResponseWriter, r *http.Request) {
 		</body>
 		</html>`
 	send.InitMailBody("Micros0ft验证码", body, mail)
+	fmt.Println("Send Obj:", send)
 	send.SendMail()
 	fmt.Println("发送成功")
 

@@ -3,6 +3,7 @@ package User
 import (
 	"fmt"
 	"testing"
+	"RemoteRouter/User"
 )
 
 func TestUser(t *testing.T) {
@@ -12,7 +13,7 @@ func TestUser(t *testing.T) {
 
 func testUser_AddUser(t *testing.T) {
 	fmt.Println("添加用户:")
-	user := User{
+	user := User.User{
 		Username: "liweijun",
 		Password: "liweijun",
 		Email:    "123@gmail.com",

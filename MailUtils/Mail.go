@@ -24,9 +24,14 @@ type Mail struct {
 
 // InitMailServer 初始化邮箱服务器
 func (m *Mail) InitMailServer() {
-	m.ServerSmtpUsername = "liweijun0302@163.com"
-	m.ServerSmtpPassword = "ZZYWKVVUAFAMEXKA"
-	m.ServerSmtpHost = "smtp.163.com:25"
+	// m.ServerSmtpUsername = "liweijun0302@163.com"
+	// m.ServerSmtpPassword = "NXKVGJEXRNIVKHIJ"
+	// m.ServerSmtpHost = "smtp.163.com:25"
+
+	// aggfuheyfggqghfe
+	m.ServerSmtpUsername = "1784929126@qq.com"
+	m.ServerSmtpPassword = "aggfuheyfggqghfe"
+	m.ServerSmtpHost = "smtp.qq.com:465"
 }
 
 // InitMailBody subject:主题 body:邮件主体 to:目的邮箱
