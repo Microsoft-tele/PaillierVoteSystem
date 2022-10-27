@@ -3,23 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>统计结果</title>
+    
+    <link rel="stylesheet" href="/css/statistic.css">
+
 </head>
+
 <body>
 {{template "top.html"}}
-<h1>统计结果</h1>
-<table border="1" id="Ticket">
-    <tr>
-        <td>姓名</td>
-        <td>明文结果</td>
-        <td>密文结果</td>
-    </tr>
-    {{range .}}
-    <tr>
-        <td>{{.Name}}</td>
-        <td>{{.Res}}</td>
-        <td><a href="#"><button>点击查看密文结果</button></a></td>
-    </tr>
-    {{end}}
-</table>
+
+<div class="home">
+    <div class="page">
+        <h1 id="tittle">统计结果</h1>
+        <table id="Ticket">
+            <tr>
+                <td class="tittle2" id="tittle2_1">候选人</td>
+                <td class="tittle2" id="tittle2_2">票数</td>
+                <td class="tittle2" id="tittle2_3">密文结果</td>
+            </tr>
+            {{range .}}
+            <tr>
+                <td class="table-info">{{.Name}}</td>
+                <td class="table-info">{{.Res}}</td>
+                <td class="table-info"><a href="#"><button id="btn">点击查看</button></a></td>
+            </tr>
+            {{end}}
+        </table>
+    </div>
+</div>
+
+
 </body>
 </html>
