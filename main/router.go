@@ -114,23 +114,7 @@ func SendVerifyCode(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("mail", mail)
 	rand.Seed(time.Now().UnixNano())
 	VerifyNum := rand.Intn(900000) + 99999
-
-	send := MailUtils.Mail{}
-	send.InitMailServer()
-	body := `
-		<!DOCTYPE html>
-		<html lang="en">
-		<head>
-			<meta charset="iso-8859-15">
-			<title>MMOGA POWER</title>
-		</head>
-		<body>
-			验证码: ` + strconv.Itoa(VerifyNum) + "\n" + `
-		</body>
-		</html>`
-	send.InitMailBody("Micros0ft验证码", body, mail)
-	fmt.Println("Send Obj:", send)
-	send.SendMail()
+	MailUtils.SendVerifyCode(mail, fmt.Sprintf("%d", VerifyNum))
 	fmt.Println("发送成功")
 
 	// 接入数据库
@@ -197,19 +181,26 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Printf("数据库中的数据[%T : %v][%T : %v][%T : %v]\n", databasePassword, databasePassword, databaseIsVeryfy, databaseIsVeryfy, databaseidRadioOption, databaseidRadioOption)
-	file1, err := template.ParseFiles("../mod/login.html")
-	file2, err := template.ParseFiles("../mod/index.html")
+	
 
 	if databaseIsVeryfy == "1" {
 		if databasePassword == password && databaseidRadioOption == idRadioOption {
 			fmt.Println("身份验证成功:")
+			//w.Header().Set("Location", "/mod/index.html")
+			//w.WriteHeader(302)
+			file2, err := template.ParseFiles("../mod/index.html", "../mod/top.html")
+			if err != nil {
+				fmt.Println("解析文件失败:", err)
+			}
 			file2.Execute(w, "身份验证成功")
 		} else {
 			fmt.Println("信息不匹配:")
+			file1, _ := template.ParseFiles("../mod/login.html")
 			file1.Execute(w, "信息不匹配")
 		}
 	} else {
 		fmt.Println("账号还未完成注册:")
+		file1, _ := template.ParseFiles("../mod/login.html")
 		file1.Execute(w, "账号还未完成注册")
 	}
 }

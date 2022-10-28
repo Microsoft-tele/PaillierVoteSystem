@@ -10,6 +10,12 @@ func TestSendToMail(t *testing.T) {
 	t.Run("开始测试发送邮件:", test)
 }
 
+func TestMain_(t *testing.T) {
+	fmt.Println("开始发送邮件465")
+	SendVerifyCode("1784929126@qq.com", fmt.Sprintf("%d", 123456))
+	fmt.Println("发送成功:")
+}
+
 func test(t *testing.T) {
 	mail := Mail{}
 	mail.InitMailServer()
