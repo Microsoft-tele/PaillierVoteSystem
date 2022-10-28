@@ -7,11 +7,11 @@
 
 </head>
 <body>
-    <form action="http://47.100.188.70/register" method="post">
+    <form action="https://404060p9q5.zicp.fun/register" method="post">
         <div id="register-box">
             <span>欢迎注册</span>
             <div class="tips">
-                <label class="form-label" id="tips">已有账号？<a href="http://47.100.188.70/loginIndex">点击登录</a></label><br>
+                <label class="form-label" id="tips">已有账号？<a href="https://404060p9q5.zicp.fun/loginIndex">点击登录</a></label><br>
                 <!-- @TODO 记得修改公网地址-->
             </div>
             <div class="form">
@@ -57,11 +57,11 @@
     <script>
         function getVerifyCode(){
             const mail = document.getElementById("email").value;
-            const url = "http://47.100.188.70/sendVerifyCode?mail=" + mail// @TODO 修改公网地址
+            const url = "https://404060p9q5.zicp.fun/sendVerifyCode?mail=" + mail// @TODO 修改公网地址
             alert(url)
-            const Http = new XMLHttpRequest()
-            Http.open("GET", url, true)
-            Http.send()
+            const http = new XMLHttpRequest()
+            http.open("GET", url, true)
+            http.send()
         }
     </script>
 </body>
