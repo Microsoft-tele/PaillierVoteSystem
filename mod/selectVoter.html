@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>查看投票人信息</title>
+    <link rel="stylesheet" href="/css/selectVoter.css">
 </head>
 <body>
 {{template "top.html"}}
-<h1>投票人信息</h1>
-<form action="http://47.100.188.70/verifySignature" method="post">
-    <table border="1" id="Ticket">
-        <tr>
-            <td>ID</td>
-            <td>RSA公钥</td>
-            <td>签名</td>
-        </tr>
-        {{range .}}
-        <tr>
-            <td>{{.ID}}</td>
-            <td>{{.RSA}}</td>
-            <td>{{.Signature}}</td>
-            <td><input type="submit" name="{{.ID}}" value="验证签名"></td>
-        </tr>
-        {{end}}
-    </table>
-</form>
+
+<div class="home">
+    <div class="page">
+        <h1 id="tittle">投票人信息</h1>
+        <form action="http://47.100.188.70/verifySignature" method="post">
+            <table id="Ticket">
+                <tr>
+                    <td class="tittle2" id="tittle2_1">ID</td>
+                    <td class="tittle2" id="tittle2_2">RSA公钥</td>
+                    <td class="tittle2" id="tittle2_3">签名</td>
+                    <td class="tittle2" id="tittle2_4">操作</td>
+                </tr>
+                {{range .}}
+                <tr>
+                    <td class="table-info">{{.ID}}</td>
+                    <td class="table-info">{{.RSA}}</td>
+                    <td class="table-info">{{.Signature}}</td>
+                    <td class="table-info"><input id="btn" type="submit" name="{{.ID}}" value="验证签名"></td>
+                </tr>
+                {{end}}
+            </table>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
