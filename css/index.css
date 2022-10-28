@@ -6,85 +6,96 @@
 body {
     background-size: 100% auto;
     position: relative;
+    /* z-index: -1; */
 }
 
 .page {
     position: absolute;
-    margin-top: 6%;
+    margin-top: 2%;
     left: 3%;
     width: 80%;
     height: auto;
     background: #ff1c1c;
+    z-index: -1;
 }
 
 .page .img-tab {
     position: absolute;
 }
 
-
-.page .img-tab #pic_1 {
+#pic_1 {
     position: relative;
     width: 20vw;
-    height: 30vw;
-    border-radius: 50px;
+    height: 25vw;
+    border-radius: 3vw;
     padding: 1.5vw;
     filter: grayscale(0%);
+    z-index: -1;
 }
 
-.page .img-tab #pic_2 {
+#pic_2 {
     position: relative;
     width: 20vw;
-    height: 30vw;
-    border-radius: 50px;
+    height: 25vw;
+    border-radius: 3vw;
     padding: 1.5vw;
     filter: grayscale(80%);
+    z-index: -1;
 }
 
-.page .img-tab #pic_3 {
+#pic_3 {
     position: relative;
     width: 20vw;
-    height: 30vw;
-    border-radius: 50px;
+    height: 25vw;
+    border-radius: 3vw;
     padding: 1.5vw;
     filter: grayscale(80%);
+    z-index: -1;
 }
 
-.page .img-tab #pic_4 {
+#pic_4 {
     position: relative;
     width: 20vw;
-    height: 30vw;
-    border-radius: 50px;
+    height: 25vw;
+    border-radius: 3vw;
     padding: 1.5vw;
     filter: grayscale(80%);
+    z-index: -1;
 }
 
-.page .img-tab #deleteKey {
+#deleteKey {
     position: absolute;
     top: 50%;
     left: 8%;
     width: 10%;
     height: auto;
     font-size: 1.5vw;
+    border-radius: 0.5vw;
+    border: 0.1vw solid #ffffff;
 }
 
-.page .img-tab #deleteKey:hover {
+#deleteKey:hover {
     cursor: pointer;
+    color: #0066ff;
 }
 
-.page .img-tab #newProject {
+#newProject {
     position: absolute;
     top: 65%;
     left: 8%;
     width: 10%;
     height: auto;
     font-size: 1.5vw;
+    border-radius: 0.5vw;
+    border: 0.1vw solid #ffffff;
 }
 
-.page .img-tab #newProject:hover {
+#newProject:hover {
     cursor: pointer;
+    color: #0066ff;
 }
 
-.page .img-tab #nextStep_1 {
+#nextStep_1 {
     position: absolute;
     top: 88%;
     left: 15%;
@@ -96,25 +107,28 @@ body {
     background: rgba(0,0,0,0);
 }
 
-.page .img-tab #nextStep_1:hover {
+#nextStep_1:hover {
     cursor: pointer;
     color: #9cffe9;
 }
 
-.page .img-tab #enterInformation {
+#enterInformation {
     position: absolute;
     top: 50%;
     left: 33%;
     width: 10%;
     height: auto;
     font-size: 1.5vw;
+    border-radius: 0.5vw;
+    border: 0.1vw solid #ffffff;
 }
 
-.page .img-tab #enterInformation:hover {
+#enterInformation:hover {
     cursor: pointer;
+    color: #0066ff;
 }
 
-.page .img-tab #nextStep_2 {
+#nextStep_2 {
     position: absolute;
     top: 88%;
     left: 40%;
@@ -126,25 +140,28 @@ body {
     background: rgba(0,0,0,0);
 }
 
-.page .img-tab #nextStep_2:hover {
+#nextStep_2:hover {
     cursor: pointer;
     color: #9cffe9;
 }
 
-.page .img-tab #countNum {
+#countNum {
     position: absolute;
     top: 50%;
     left: 58%;
     width: 10%;
     height: auto;
     font-size: 1.5vw;
+    border-radius: 0.5vw;
+    border: 0.1vw solid #ffffff;
 }
 
-.page .img-tab #countNum:hover {
+#countNum:hover {
     cursor: pointer;
+    color: #0066ff;
 }
 
-.page .img-tab #nextStep_3 {
+#nextStep_3 {
     position: absolute;
     top: 88%;
     left: 65%;
@@ -156,38 +173,44 @@ body {
     background: rgba(0,0,0,0);
 }
 
-.page .img-tab #nextStep_3:hover {
+#nextStep_3:hover {
     cursor: pointer;
     color: #9cffe9;
 }
 
-.page .img-tab #queryRes {
+#queryRes {
     position: absolute;
     top: 50%;
     left: 83%;
     width: 10%;
     height: auto;
     font-size: 1.5vw;
+    border-radius: 0.5vw;
+    border: 0.1vw solid #ffffff;
 }
 
-.page .img-tab #queryRes:hover {
+#queryRes:hover {
     cursor: pointer;
+    color: #0066ff;
 }
 
-.page .img-tab #verifySign {
+#verifySign {
     position: absolute;
     top: 65%;
     left: 83%;
     width: 10%;
     height: auto;
     font-size: 1.5vw;
+    border-radius: 0.5vw;
+    border: 0.1vw solid #ffffff;
 }
 
-.page .img-tab #verifySign:hover {
+#verifySign:hover {
     cursor: pointer;
+    color: #0066ff;
 }
 
-.page .img-tab #nextStep_4 {
+/* #nextStep_4 {
     position: absolute;
     top: 88%;
     left: 90%;
@@ -199,21 +222,21 @@ body {
     background: rgba(0,0,0,0);
 }
 
-.page .img-tab #nextStep_4:hover {
+#nextStep_4:hover {
     cursor: pointer;
     color: #9cffe9;
-}
+} */
 
 #retLabel1 {
     position: absolute;
     text-decoration: none;
     color: #000;
     background: #ffc;
-    margin-top: 42%;
-    left: 5%;
-    width: 20vw;
+    margin-top: 37%;
+    left: 2%;
+    width: 40vw;
     height: 3vw;
-    padding: 1vw;
+    padding: 1vw 2vw;
     font-size: 1vw;
     font-family: "微软雅黑";
     -moz-box-shadow: 5px 5px 7px rgba(33,33,33,1);
@@ -226,8 +249,8 @@ body {
     text-decoration: none;
     background: #dedede;
     opacity: 0.4;
-    margin-top: 42%;
-    left: 3%;
+    margin-top: 37%;
+    left: 0;
     width: 6vw;
     height: 2vw;
     -webkit-transform:rotate(-45deg);
