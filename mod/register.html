@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <title>注册页面</title>
     <link rel="stylesheet" href="/css/register.css">
-
+    <script src="/script/SHA256.js"></script>
 </head>
 <body>
-    <form action="https://404060p9q5.zicp.fun/register" method="post">
+    <div class="tip">
+        <p>{{.}}</p> <!--  @TODO 修改回显位置-->
+    </div>
+    <!-- action="https://404060p9q5.zicp.fun/register" -->
+    <form method="post">
         <div id="register-box">
             <span>欢迎注册</span>
             <div class="tips">
@@ -43,14 +47,11 @@
                     <label class="form-label" for="verificationcode">验证码</label>
                     <input name="verifyCode" id="verificationcode" class="form-input" type="text" placeholder="请输入验证码" />
                 </div>
-                <input id="btn" type="submit" value="注册">
+                <input id="btn" type="submit" value="注册" onclick="getForm()">
             </div>
         </div>
-        <div class="tip">
-            <p>{{.}}</p> <!--  @TODO 修改回显位置-->
-        </div>
     </form>
-    <a onclick="getVerifyCode()">
+    <a id="code" onclick="getVerifyCode()">
         <button>获取验证码</button>
     </a>
   
@@ -62,6 +63,29 @@
             const http = new XMLHttpRequest()
             http.open("GET", url, true)
             http.send()
+        }
+    </script>
+
+    <script>
+        function getForm(){
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const verificationcode = document.getElementById("verificationcode").value;
+
+            const shaPwd = SHA256(password)
+            console.log(shaPwd)
+
+            var http = new XMLHttpRequest();
+            var url = 'https://404060p9q5.zicp.fun/register';
+            var params = 'name=' + name + '&' + 'email=' + email + '&' + 'password=' + shaPwd +'&' + 'verificationcode=' + verificationcode;
+            http.open('POST', url, true);
+
+            alert(shaPwd)
+
+            //Send the proper header information along with the request
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            http.send(params);
         }
     </script>
 </body>

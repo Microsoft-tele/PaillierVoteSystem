@@ -3,7 +3,6 @@ package User
 import (
 	"fmt"
 	"testing"
-	"RemoteRouter/User"
 )
 
 func TestUser(t *testing.T) {
@@ -11,28 +10,17 @@ func TestUser(t *testing.T) {
 	t.Run("测试查询一条记录:", testUser_SelectUserByEmail)
 }
 
-func testUser_AddUser(t *testing.T) {
-	fmt.Println("添加用户:")
-	user := User.User{
-		Username: "liweijun",
-		Password: "liweijun",
-		Email:    "123@gmail.com",
-	}
-	err := user.AddUser()
-	if err != nil {
-		fmt.Println("添加用户失败:", err)
-		return
-	}
-}
 func testUser_SelectUserByEmail(t *testing.T) {
 	fmt.Println("测试查询一条记录")
-	user := User{
-		Username: "",
-		Password: "",
-		Email:    "admin@admin.com",
-	}
-	err := user.SelectUserByEmail()
+	user := User{}
+	user.InitMysql()
+	prepare, err := user.Db.Prepare("select verify_code from users.user where email=?")
 	if err != nil {
 		return
 	}
+	row := prepare.QueryRow("1784929126@qq.com")
+	var verify string
+	row.Scan(&verify)
+	fmt.Println("row", row)
+	fmt.Println("Verify code is:", verify)
 }

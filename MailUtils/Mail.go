@@ -13,7 +13,7 @@ func SendVerifyCode(To string, VerifyCode string) {
 	port := 465
 	email := "liweijun0302@163.com" // 发送邮箱
 	pwd := "NXKVGJEXRNIVKHIJ"       // 邮箱密码
-	toEmail := "1784929126@qq.com"  // 目标地址
+	toEmail := To // 目标地址
 	header := make(map[string]string)
 	header["From"] = "Verify" + "<" + email + ">"
 	header["To"] = To
