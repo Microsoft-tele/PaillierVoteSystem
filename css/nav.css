@@ -6,18 +6,19 @@
 }
 
 .nav {
-    height: 40px;
+    height: 3vw;
     background: #333;
     box-shadow: 0 1px 2px #666;
+    z-index: 999;
 }
-
 
 
 .btli {
     float: left;
-    width: 150px;
-    line-height: 40px;
+    width: 10vw;
+    line-height: 3vw;
     text-align: center;
+    font-size: 1vw;
 }
 
 .navlist a {
@@ -30,8 +31,8 @@
     background: #666;
 }
 
-.navlist #main {
-    width: 300px;
+#main {
+    width: 15vw;
 }
 
 .droplist {
@@ -49,5 +50,5 @@
 
 .navlist #ret {
     float: right;
-    margin: 0 30px;
+    margin: 0 2vw;
 }

@@ -4,49 +4,21 @@
 }
 
 .home {
-    height: 150%;
     margin: 0 auto;
-    margin-top: 4%;
-    margin-left: 10%;
+    margin-top: 3%;
+    margin-left: 6%;
+    /* z-index: -1; */
 }
 
 .page {
     padding: 1.5% 1% 1.5% 4%;
     background: #DEAA2F;
     position: absolute;
-    text-align: center;
     width: 80%;
     color: black;
     margin: 0 auto;
+    z-index: -1;
 }
-
-.page:before {
-    content: "";
-    position: absolute;
-    z-index: -2;
-    -moz-transform: rotate(-3deg);
-    -webkit-transform: rotate(-3deg);
-    -o-transform: rotate(-3deg);
-    -ms-transform: rotate(-3deg);
-    transform: rotate(-3deg);
-    bottom: 15px;
-    box-shadow: 0 15px 10px rgba(0, 0, 0, 0.7);
-    height: 50%;
-    left: 10px;
-    max-height: 100px;
-    max-width: 300px;
-    width: 50%;
-}
-
-/*.page:after {*/
-/*    -moz-transform: rotate(3deg);*/
-/*    -webkit-transform: rotate(3deg);*/
-/*    -o-transform: rotate(3deg);*/
-/*    -ms-transform: rotate(3deg);*/
-/*    transform: rotate(3deg);*/
-/*    left: auto;*/
-/*    right: 10px;*/
-/*}*/
 
 .page .tittle {
     text-align: left;
@@ -166,7 +138,7 @@
 }
 
 .page #btn {
-    margin: 4% 0 2% 0;
+    margin: 4% 0 2% 45%;
     width: 15%;
     height: auto;
     font-size: 1.5vw;
@@ -199,6 +171,7 @@ head script input {
 }
 
 .page #retTip {
+    position: relative;
     color: #ff0000;
     font-size: 2vw;
 }
