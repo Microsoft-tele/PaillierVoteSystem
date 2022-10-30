@@ -149,50 +149,50 @@ func LoginIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Println("解析失败:", err)
+		return
+	}
 	form := r.PostForm
 	var email string
 	var password string
-	var idRadioOption string
 	for k, v := range form {
 		fmt.Printf("[%v : %v]\n", k, v)
 		if k == "email" {
 			email = v[0]
 		} else if k == "password" {
 			password = v[0]
-		} else if k == "idRadioOption" {
-			idRadioOption = v[0]
 		}
 	}
 
 	user := User.User{}
 	user.InitMysql()
-	prepare, err := user.Db.Prepare("select password,is_verify,identity from user where email=?")
+	prepare, err := user.Db.Prepare("select password,is_verify from user where email=?")
 	if err != nil {
 		fmt.Println("解析sql语句错误:", err)
 		return
 	}
 	row := prepare.QueryRow(email)
 	var databasePassword string
-	var databaseIsVeryfy string
-	var databaseidRadioOption string
-	err = row.Scan(&databasePassword, &databaseIsVeryfy, &databaseidRadioOption)
+	var databaseIsVerify string
+	err = row.Scan(&databasePassword, &databaseIsVerify)
 	if err != nil {
 		fmt.Println("读取数据库失败:", err)
 		return
 	}
-	fmt.Printf("数据库中的数据[%T : %v][%T : %v][%T : %v]\n", databasePassword, databasePassword, databaseIsVeryfy, databaseIsVeryfy, databaseidRadioOption, databaseidRadioOption)
+	fmt.Printf("数据库中的数据[%T : %v][%T : %v]\n", databasePassword, databasePassword, databaseIsVerify, databaseIsVerify)
 
-	if databaseIsVeryfy == "1" {
-		if databasePassword == password && databaseidRadioOption == idRadioOption {
+	if databaseIsVerify == "1" {
+		if databasePassword == password {
 			fmt.Println("身份验证成功:")
-			//w.Header().Set("Location", "/mod/index.html")
-			//w.WriteHeader(302)
-			file2, err := template.ParseFiles("../mod/index.html", "../mod/top.html")
-			if err != nil {
-				fmt.Println("解析文件失败:", err)
-			}
-			file2.Execute(w, "身份验证成功")
+			w.Header().Set("Location", "https://404060p9q5.zicp.fun/index")
+			w.WriteHeader(302)
+			//file2, err := template.ParseFiles("../mod/index.html", "../mod/top.html")
+			//if err != nil {
+			//	fmt.Println("解析文件失败:", err)
+			//}
+			//file2.Execute(w, "身份验证成功")
 		} else {
 			fmt.Println("信息不匹配:")
 			file1, _ := template.ParseFiles("../mod/login.html")
@@ -216,7 +216,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	var email string
 	var password string
 	var verifyCode string
-	//var idRadioOption string
+	var idRadioOption string
 
 	for k, v := range form {
 		fmt.Printf("[%v : %v]\n", k, v)
@@ -227,7 +227,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		} else if k == "verificationcode" {
 			verifyCode = v[0]
 		} else if k == "idRadioOption" {
-			//idRadioOption = v[0]
+			idRadioOption = v[0]
 		} else if k == "password" {
 			password = v[0]
 		}
@@ -252,12 +252,12 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 	if databaseVerifyCode == verifyCode {
 		fmt.Println("验证成功：准备存入数据库")
-		stmt, err := user.Db.Prepare("update user set username=?,password=?,is_verify=? where email=?")
+		stmt, err := user.Db.Prepare("update user set username=?,password=?,is_verify=?,identity=? where email=?")
 		if err != nil {
 			fmt.Println("解析sql语句失败:", err)
 			return
 		}
-		_, err = stmt.Exec(nickname, password, strconv.Itoa(1), email)
+		_, err = stmt.Exec(nickname, password, strconv.Itoa(1), idRadioOption, email)
 		if err != nil {
 			fmt.Println("修改数据库失败:", err)
 			return

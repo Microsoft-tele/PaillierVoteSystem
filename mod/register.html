@@ -11,7 +11,7 @@
         <p>{{.}}</p> <!--  @TODO 修改回显位置-->
     </div>
     <!-- action="https://404060p9q5.zicp.fun/register" -->
-    <form method="post">
+    <form method="post" action="#">
         <div id="register-box">
             <span>欢迎注册</span>
             <div class="tips">
@@ -22,13 +22,13 @@
                 <div class="radio-inline">
                     <label class="form-label">请选择您的身份</label>
                     <label class="idRadio">
-                        <input value="1" type="radio" name="idRadioOption" id="voter" required><label for="voter">投票人</label>
+                        <input type="radio" name="idRadioOption" id="voter" required><label for="voter">投票人</label>
                     </label>
                     <label class="idRadio">
-                        <input value="2" type="radio" name="idRadioOption" id="candidate" required><label for="candidate">候选人</label>
+                        <input type="radio" name="idRadioOption" id="candidate" required><label for="candidate">候选人</label>
                     </label>
                     <label class="idRadio">
-                        <input value="3" type="radio" name="idRadioOption" id="notary" required><label for="notary">公证人</label>
+                        <input type="radio" name="idRadioOption" id="notary" required><label for="notary">公证人</label>
                     </label>
                 </div>
                 <div class="item">
@@ -72,17 +72,23 @@
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const verificationcode = document.getElementById("verificationcode").value;
+            const idRadioOption = document.getElementsByName("idRadioOption")
+            var identity = 4
+            for (i = 0; i < idRadioOption.length; i++){
+                if (idRadioOption[i].checked) {
+                    identity = i
+                    console.log("Res:", idRadioOption[i].checked)
+                }
+            }
+            console.log("Identity:", identity)
 
             const shaPwd = SHA256(password)
             console.log(shaPwd)
 
             var http = new XMLHttpRequest();
             var url = 'https://404060p9q5.zicp.fun/register';
-            var params = 'name=' + name + '&' + 'email=' + email + '&' + 'password=' + shaPwd +'&' + 'verificationcode=' + verificationcode;
+            var params = 'name=' + name + '&' + 'email=' + email + '&' + 'password=' + shaPwd +'&' + 'verificationcode=' + verificationcode + '&' + 'idRadioOption=' + identity;
             http.open('POST', url, true);
-
-            alert(shaPwd)
-
             //Send the proper header information along with the request
             http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             http.send(params);
