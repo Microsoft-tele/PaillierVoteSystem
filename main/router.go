@@ -40,6 +40,7 @@ func main() {
 	http.Handle("/css/img/", http.StripPrefix("/css/img/", http.FileServer(http.Dir("../css/img/"))))
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("../css"))))
 	http.Handle("/mod/", http.StripPrefix("/mod/", http.FileServer(http.Dir("../mod"))))
+	http.Handle("/script/", http.StripPrefix("/script/", http.FileServer(http.Dir("../script"))))
 
 	http.HandleFunc("/api/test", Test)
 
@@ -148,51 +149,50 @@ func LoginIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Println("解析失败:", err)
+		return
+	}
 	form := r.PostForm
 	var email string
 	var password string
-	var idRadioOption string
 	for k, v := range form {
 		fmt.Printf("[%v : %v]\n", k, v)
 		if k == "email" {
 			email = v[0]
 		} else if k == "password" {
 			password = v[0]
-		} else if k == "idRadioOption" {
-			idRadioOption = v[0]
 		}
 	}
 
 	user := User.User{}
 	user.InitMysql()
-	prepare, err := user.Db.Prepare("select password,is_verify,identity from user where email=?")
+	prepare, err := user.Db.Prepare("select password,is_verify from user where email=?")
 	if err != nil {
 		fmt.Println("解析sql语句错误:", err)
 		return
 	}
 	row := prepare.QueryRow(email)
 	var databasePassword string
-	var databaseIsVeryfy string
-	var databaseidRadioOption string
-	err = row.Scan(&databasePassword, &databaseIsVeryfy, &databaseidRadioOption)
+	var databaseIsVerify string
+	err = row.Scan(&databasePassword, &databaseIsVerify)
 	if err != nil {
 		fmt.Println("读取数据库失败:", err)
 		return
 	}
-	fmt.Printf("数据库中的数据[%T : %v][%T : %v][%T : %v]\n", databasePassword, databasePassword, databaseIsVeryfy, databaseIsVeryfy, databaseidRadioOption, databaseidRadioOption)
-	
+	fmt.Printf("数据库中的数据[%T : %v][%T : %v]\n", databasePassword, databasePassword, databaseIsVerify, databaseIsVerify)
 
-	if databaseIsVeryfy == "1" {
-		if databasePassword == password && databaseidRadioOption == idRadioOption {
+	if databaseIsVerify == "1" {
+		if databasePassword == password {
 			fmt.Println("身份验证成功:")
-			//w.Header().Set("Location", "/mod/index.html")
-			//w.WriteHeader(302)
-			file2, err := template.ParseFiles("../mod/index.html", "../mod/top.html")
-			if err != nil {
-				fmt.Println("解析文件失败:", err)
-			}
-			file2.Execute(w, "身份验证成功")
+			w.Header().Set("Location", "https://404060p9q5.zicp.fun/index")
+			w.WriteHeader(302)
+			//file2, err := template.ParseFiles("../mod/index.html", "../mod/top.html")
+			//if err != nil {
+			//	fmt.Println("解析文件失败:", err)
+			//}
+			//file2.Execute(w, "身份验证成功")
 		} else {
 			fmt.Println("信息不匹配:")
 			file1, _ := template.ParseFiles("../mod/login.html")
@@ -206,7 +206,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func Register(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Println("解析表单失败:", err)
+		return
+	}
 	form := r.PostForm
 	var nickname string
 	var email string
@@ -216,11 +220,11 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 	for k, v := range form {
 		fmt.Printf("[%v : %v]\n", k, v)
-		if k == "nickname" {
+		if k == "name" {
 			nickname = v[0]
 		} else if k == "email" {
 			email = v[0]
-		} else if k == "verifyCode" {
+		} else if k == "verificationcode" {
 			verifyCode = v[0]
 		} else if k == "idRadioOption" {
 			idRadioOption = v[0]
@@ -230,20 +234,21 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 	user := User.User{}
 	user.InitMysql()
-	prepare, err := user.Db.Prepare("select verify_code from user where email=?")
+
+	prepare, err := user.Db.Prepare("select verify_code from users.user where email=?")
 	if err != nil {
 		fmt.Println("解析sql语句失败:", err)
 		return
 	}
 	row := prepare.QueryRow(email)
+
 	var databaseVerifyCode string
 	err = row.Scan(&databaseVerifyCode)
 	if err != nil {
 		fmt.Println("获取数据库数据失败:", err)
 		return
 	}
-
-	files, _ := template.ParseFiles("../mod/register.html")
+	fmt.Println("数据库中的验证码：", databaseVerifyCode)
 
 	if databaseVerifyCode == verifyCode {
 		fmt.Println("验证成功：准备存入数据库")
@@ -252,15 +257,16 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("解析sql语句失败:", err)
 			return
 		}
-		fmt.Println("Password 到底去哪了:", password)
 		_, err = stmt.Exec(nickname, password, strconv.Itoa(1), idRadioOption, email)
 		if err != nil {
 			fmt.Println("修改数据库失败:", err)
 			return
 		}
+		files, _ := template.ParseFiles("../mod/register.html")
 		files.Execute(w, "注册成功")
 	} else {
 		fmt.Println("验证码错误")
+		files, _ := template.ParseFiles("../mod/register.html")
 		files.Execute(w, "验证码错误,请再次输入或重新获取验证码")
 	}
 

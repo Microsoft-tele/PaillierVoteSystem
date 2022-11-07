@@ -7,6 +7,7 @@
     <title>用户登录界面</title>
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/font-awesome.css">
+    <script src="/script/SHA256.js"></script>
 
     <style>
         input::-webkit-input-placeholder {
@@ -30,18 +31,19 @@
 
 <body>
 {{.}}
-    <form action="https://404060p9q5.zicp.fun/login" method="POST"> <!-- @TODO 记得修改公网地址 -->
+<!--https://404060p9q5.zicp.fun/login-->
+    <form name="myForm" id="myForm" action="https://404060p9q5.zicp.fun/login" method="POST"> <!-- @TODO 记得修改公网地址 -->
         <div id="login-box">
             <h1>欢迎使用Micros0ft投票系统</h1>
             <div class="form">
                 <div class="item">
                     <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
-                    <input type="email" placeholder="邮箱" name="email" required>
+                    <input id="email" type="email" placeholder="邮箱" name="email" required>
                 </div>
 
                 <div class="item">
                     <i class="fa fa-key" aria-hidden="true"></i>
-                    <input type="password" placeholder="密码" name="password" required>
+                    <input id="password" type="password" placeholder="密码" name="password" required>
                 </div>
 
                 <div class="radio-inline">
@@ -56,7 +58,7 @@
                     </label>
                 </div>
             </div>
-            <button type="submit" onclick="myFunction(`{{.}}`)">登录</button><br>
+            <button type="submit" onclick="myFunction()">登录</button><br>
 
             <div class="tips">
                 <a href="https://404060p9q5.zicp.fun/registerIndex">点击注册</a><br>
@@ -65,8 +67,28 @@
         </div>
     </form>
     <script>
-        function myFunction(var1){
-            if (var1 != "{{.}}") alert("你好");
+        function myFunction(){
+            // const email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            const shaPwd = SHA256(password)
+            alert(shaPwd)
+            document.myForm.password.value = shaPwd
+            document.getElementById('myForm').submit();
+            // const idRadioOption = document.getElementsByName("idRadioOption")
+            // var identity = 4
+            // for (i = 0; i < idRadioOption.length; i++){
+            //     if (idRadioOption[i].checked) {
+            //         identity = i
+            //         console.log("Res:", idRadioOption[i].checked)
+            //     }
+            // }
+            // var http = new XMLHttpRequest();
+            // var url = 'https://404060p9q5.zicp.fun/login';
+            // var params = 'email=' + email + '&' + 'password=' + shaPwd + '&' + 'idRadioOption=' + identity;
+            // http.open('POST', url, true);
+            // //Send the proper header information along with the request
+            // http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            // http.send(params);
         }
     </script>
 </body>
